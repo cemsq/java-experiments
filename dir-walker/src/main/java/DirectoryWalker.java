@@ -18,7 +18,6 @@ public class DirectoryWalker extends DirectoryWalkerBase {
     public void currentDirectory(File dir) {
         pkg = "";
         packageFound = false;
-        apiModule = false;
         for (File file : DirectoryScanner.getFiles(dir)) {
             String name = file.getName();
             String parent = file.getParent();
@@ -32,11 +31,8 @@ public class DirectoryWalker extends DirectoryWalkerBase {
                     break;
 
                 case "api-module":
-                    setSkipDir(true);
-                    sentinel = true;
-                    break;
-
                 case "module":
+                    apiModule = name.equals("api-module");
                     module = getDifference(parent, root);
                     System.out.println("   Module: " + module);
                     sentinel = true;
