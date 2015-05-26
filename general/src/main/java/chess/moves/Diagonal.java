@@ -16,13 +16,13 @@ public class Diagonal implements IMovement {
         List<Position> list = new ArrayList<>();
 
         // up - left
-        list.addAll(Position.scan(board, pos, -1, -1));
+        list.addAll(board.searchByIncrement(pos, -1, -1));
         // up - right
-        list.addAll(Position.scan(board, pos, -1, 1));
+        list.addAll(board.searchByIncrement(pos, -1, 1));
         // down - right
-        list.addAll(Position.scan(board, pos, 1, 1));
+        list.addAll(board.searchByIncrement(pos, 1, 1));
         // down - left
-        list.addAll(Position.scan(board, pos, 1, -1));
+        list.addAll(board.searchByIncrement(pos, 1, -1));
 
         return list;
     }

@@ -32,8 +32,6 @@ public class Position {
     }
 
     public Position increment(int i, int j) {
-        //this.setPosition(this.i + i, this.j + j);
-        //return this;
         return new Position(this.i + i, this.j + j);
     }
 
@@ -51,19 +49,6 @@ public class Position {
 
     public void setJ(int j) {
         this.j = j;
-    }
-
-    public static List<Position> scan(Board board, Position pos, int incI, int incJ) {
-        List<Position> list = new ArrayList<>();
-        Position incr = new Position(incI, incJ);
-        Position iter = pos.increment(incr);
-
-        while (board.isValid(iter)) {
-            list.add(new Position(iter));
-            iter = iter.increment(incr);
-        }
-
-        return list;
     }
 
     @Override

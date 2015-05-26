@@ -17,13 +17,13 @@ public class Cross implements IMovement {
         List<Position> list = new ArrayList<>();
 
         // up
-        list.addAll(Position.scan(board, pos, -1, 0));
+        list.addAll(board.searchByIncrement(pos, -1, 0));
         // down
-        list.addAll(Position.scan(board, pos, 1, 0));
+        list.addAll(board.searchByIncrement(pos, 1, 0));
         // right
-        list.addAll(Position.scan(board, pos, 0, 1));
+        list.addAll(board.searchByIncrement(pos, 0, 1));
         // left
-        list.addAll(Position.scan(board, pos, 0, -1));
+        list.addAll(board.searchByIncrement(pos, 0, -1));
 
         return list;
     }
