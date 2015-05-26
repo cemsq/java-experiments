@@ -27,4 +27,9 @@ public class Cross implements IMovement {
 
         return list;
     }
+
+    @Override
+    public String getName() {
+        return "Cross";
+    }
 }

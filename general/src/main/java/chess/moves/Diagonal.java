@@ -26,4 +26,9 @@ public class Diagonal implements IMovement {
 
         return list;
     }
+
+    @Override
+    public String getName() {
+        return "Diagonal";
+    }
 }

@@ -4,6 +4,7 @@ import chess.moves.Cross;
 import chess.moves.Diagonal;
 import chess.moves.IMovement;
 import chess.moves.LMovement;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -13,30 +14,21 @@ import java.util.List;
  */
 public class IMovementTest {
 
-    @Test
-    public void testingCross() {
-        IMovement cross = new Cross();
-        List<Position> list = cross.searchMovements(new Board(), new Position(0, 0));
+    @Test(dataProvider = "movement-provider")
+    public void testingMovements(IMovement movement, String desc) {
+        System.out.println("Testing: " + desc);
+        List<Position> list = movement.searchMovements(new Board(), new Position(0, 0));
         for (Position pos : list) {
             System.out.println(pos);
         }
     }
 
-    @Test
-    public void testingDiagonal() {
-        IMovement cross = new Diagonal();
-        List<Position> list = cross.searchMovements(new Board(), new Position(0, 0));
-        for (Position pos : list) {
-            System.out.println(pos);
-        }
-    }
-
-    @Test
-    public void testingLMovement() {
-        IMovement cross = new LMovement();
-        List<Position> list = cross.searchMovements(new Board(), new Position(0, 0));
-        for (Position pos : list) {
-            System.out.println(pos);
-        }
+    @DataProvider(name = "movement-provider")
+    public Object[][] movementProvider() {
+        return new Object[][]{
+                {new Cross(), "Cross"},
+                {new Diagonal(), "Diagonal"},
+                {new Cross(), "LMovement"}
+        };
     }
 }
