@@ -15,6 +15,7 @@
         <module>exblacktor</module>
         <module>general</module>
         <module>dir-walker</module>
+        <module>row-content</module>
     </modules>
 
     <properties>

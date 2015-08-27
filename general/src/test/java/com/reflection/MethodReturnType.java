@@ -1,4 +1,4 @@
-package exp.reflection;
+package com.reflection;
 
 import exp.amodel.Person;
 import com.sun.org.apache.xerces.internal.xs.StringList;
