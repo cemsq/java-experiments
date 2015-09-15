@@ -7,9 +7,12 @@
 package stali;
 
 import com.google.common.base.Strings;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -51,6 +54,9 @@ public class Stali extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         numericId = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
+        randomValues = new javax.swing.JTextField();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -114,40 +120,24 @@ public class Stali extends javax.swing.JFrame {
 
         numericId.setText("numericId");
 
+        jLabel4.setText("random");
+
+        jButton7.setText("random");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jScrollPane2)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jLabel1)
-                                                                        .addComponent(transformUnitId))
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(numericId)
-                                                                        .addComponent(noQuote, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(52, 52, 52)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                                .addComponent(jLabel2)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(jLabel3)
-                                                                                .addGap(7, 7, 7)))
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                                        .addComponent(idBeginText)
-                                                                        .addComponent(tabText, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(jButton4))))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(160, 160, 160)
+                                                .addGap(10, 10, 10)
                                                 .addComponent(jButton3)
                                                 .addGap(32, 32, 32)
                                                 .addComponent(jButton1)
@@ -155,9 +145,37 @@ public class Stali extends javax.swing.JFrame {
                                                 .addComponent(jButton5)
                                                 .addGap(30, 30, 30)
                                                 .addComponent(jButton6)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                                                .addComponent(jButton2)
-                                                .addGap(130, 130, 130)))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButton7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton2))
+                                        .addComponent(jScrollPane1)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel1)
+                                                        .addComponent(transformUnitId))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(numericId)
+                                                        .addComponent(noQuote, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(52, 52, 52)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addComponent(jLabel2)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel3)
+                                                                .addGap(7, 7, 7)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(idBeginText)
+                                                        .addComponent(tabText, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(38, 38, 38)
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(randomValues, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                                                .addComponent(jButton4)))
                                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -169,7 +187,9 @@ public class Stali extends javax.swing.JFrame {
                                         .addComponent(idBeginText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1)
                                         .addComponent(noQuote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel3))
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4)
+                                        .addComponent(randomValues, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(2, 2, 2)
@@ -189,7 +209,8 @@ public class Stali extends javax.swing.JFrame {
                                         .addComponent(jButton2)
                                         .addComponent(jButton3)
                                         .addComponent(jButton5)
-                                        .addComponent(jButton6))
+                                        .addComponent(jButton6)
+                                        .addComponent(jButton7))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(55, Short.MAX_VALUE))
@@ -327,6 +348,61 @@ public class Stali extends javax.swing.JFrame {
         textFinal.setText(dataDest.toString());
     }
 
+    // random
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
+        StringBuilder dataDest = new StringBuilder("");
+
+        String randoms[] = randomValues.getText().split(" ");
+//        if (randoms.length == 1) {
+//            int perDay = Integer.valueOf(randoms[0]);
+//            int maxTexts = Integer.valueOf(randoms[1]);;
+//            int maxDates = Integer.valueOf(randoms[2]);;
+//
+//            for (int day = 1; day <= maxDates; day++){
+//                for (int search = 1; search <= perDay; search++) {
+//                    int textId = random(1, maxTexts);
+//                    dataDest.append(day);
+//                    dataDest.append("\t");
+//                    dataDest.append(textId);
+//                    dataDest.append("\n");
+//                }
+//            }
+//        }
+        if (randoms.length == 3) {
+
+//            LocalDate from = LocalDate.parse("2015-01-01");
+//            LocalDate to = LocalDate.parse("2015-12-31");
+//            for (LocalDate date = from; date.isBefore(to); date = date.plusDays(1)) {
+//                dataDest.append(date);
+//                dataDest.append("\n");
+//            }
+
+            int numberOfTexts = Integer.valueOf(randoms[0]);
+            int numberOfDays = Integer.valueOf(randoms[1]);
+            int maxPerDay = Integer.valueOf(randoms[2]);
+            for (int day = 1; day <= numberOfDays; day++) {
+                for (int textId = 1; textId <= numberOfTexts; textId++) {
+                    dataDest.append(day);
+                    dataDest.append("\t");
+                    dataDest.append(textId);
+                    dataDest.append("\t");
+                    dataDest.append(random(0, maxPerDay));
+                    dataDest.append("\n");
+                }
+            }
+        } else {
+            dataDest.append("wrong parameters in random TextBox. int and date expected");
+        }
+
+        textFinal.setText(dataDest.toString());
+    }
+
+    public int random(int min, int max) {
+        double p = Math.random();
+
+        return min + (int)(p*(max + 1 - min));
+    }
+
     // Row Content
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -357,7 +433,10 @@ public class Stali extends javax.swing.JFrame {
                     dataDest.append(tab);
                     dataDest.append("<Row>");
 
-                    if (!Strings.isNullOrEmpty(idBegin)) {
+                    if (numericId.isSelected()) {
+                        dataDest.append(count);
+                        dataDest.append(",");
+                    } else if (!Strings.isNullOrEmpty(idBegin)) {
                         dataDest.append("\"");
                         dataDest.append(idBegin);
                         dataDest.append(count);
@@ -450,13 +529,16 @@ public class Stali extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField noQuote;
     private javax.swing.JCheckBox numericId;
+    private javax.swing.JTextField randomValues;
     private javax.swing.JTextField tabText;
     private javax.swing.JTextArea textFinal;
     private javax.swing.JTextArea textOrigin;

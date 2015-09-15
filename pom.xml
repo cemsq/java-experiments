@@ -15,7 +15,6 @@
         <module>exblacktor</module>
         <module>general</module>
         <module>dir-walker</module>
-        <module>row-content</module>
     </modules>
 
     <properties>
@@ -59,6 +58,13 @@
             <artifactId>mockito-core</artifactId>
             <version>1.10.19</version>
         </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+        </dependency>
+
 
         <!-- needed to setup logging -->
         <dependency>

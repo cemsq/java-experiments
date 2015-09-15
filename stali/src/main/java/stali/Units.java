@@ -60,7 +60,7 @@ public class Units {
     }
 
     private static String getId() {
-        String id = "unit_x" + count++;
+        String id = String.valueOf(count++);
         return id;
     }
 
