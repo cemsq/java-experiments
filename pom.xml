@@ -17,6 +17,7 @@
         <module>dir-walker</module>
         <module>cmd-tool</module>
         <module>chess-game</module>
+        <module>text-processor</module>
     </modules>
 
     <properties>
