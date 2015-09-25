@@ -1,7 +1,5 @@
 package com.cgm.storm.utils.properties;
 
-import com.cg.helix.schemadictionary.annotation.ComplexType;
-import com.cg.helix.schemadictionary.annotation.Element;
 import com.google.common.base.Strings;
 
 import java.util.ArrayList;
@@ -10,14 +8,10 @@ import java.util.List;
 /**
  *
  */
-
-@ComplexType
 public class PropertyCategory {
 
-    @Element
     private String name;
 
-    @Element
     private List<PropertyItem> itemList = new ArrayList<>();
 
     public PropertyCategory() {

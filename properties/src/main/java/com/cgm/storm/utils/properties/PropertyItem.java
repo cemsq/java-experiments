@@ -1,14 +1,14 @@
 package com.cgm.storm.utils.properties;
 
-import com.cg.helix.schemadictionary.annotation.ComplexType;
-import com.cg.helix.util.StringUtils;
+
+import com.google.common.base.Strings;
 
 import java.util.List;
 
 /**
  * PropertyItem
  */
-@ComplexType
+
 public class PropertyItem {
 
     private Boolean editable;
@@ -53,7 +53,7 @@ public class PropertyItem {
             case "Integer":
                 this.editstyle = EditStyle.NumberEdit.name();
 
-                if (StringUtils.isNullOrEmpty( this.value)) {
+                if (Strings.isNullOrEmpty(this.value)) {
                     this.value = "0";
                 }
 
@@ -61,7 +61,7 @@ public class PropertyItem {
             case "Boolean":
                 this.editstyle = EditStyle.CheckBox.name();
 
-                if (StringUtils.isNullOrEmpty( this.value)) {
+                if (Strings.isNullOrEmpty( this.value)) {
                     this.value = "false";
                 }
 
