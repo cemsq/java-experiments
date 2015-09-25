@@ -1,5 +1,8 @@
 package properties.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  */
@@ -11,6 +14,8 @@ public class Person {
     private House house;
 
     private Pet pet;
+
+    private List<String> numbers;
 
     public Person() {
         house = new House();
@@ -53,5 +58,12 @@ public class Person {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public void setNumbers(String... numbers) {
+        this.numbers = new ArrayList<>();
+        for (String num : numbers) {
+            this.numbers.add(num);
+        }
     }
 }

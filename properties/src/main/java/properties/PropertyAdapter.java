@@ -1,5 +1,6 @@
 package properties;
 
+import properties.grabber.ClassHelper;
 import properties.grabber.FieldGrabber;
 import properties.properties.PropertyCategory;
 import properties.properties.PropertyItem;
@@ -101,4 +102,10 @@ public class PropertyAdapter<T> {
         return properties;
     }
 
+    public T createObject(PropertySet properties) {
+        Object obj = ClassHelper.createInstance(clazz);
+        update(properties, (T)obj, false);
+
+        return (T)obj;
+    }
 }

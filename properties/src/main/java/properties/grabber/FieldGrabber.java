@@ -1,7 +1,7 @@
 package properties.grabber;
 
 import java.lang.reflect.Field;
-import static properties.grabber.FieldGrabberHelper.*;
+
 /**
  *
  */
@@ -15,8 +15,8 @@ public class FieldGrabber {
     }
 
     private static void buildFieldSequence(FieldGrabber grabber, Class clazzOwner, String fieldName) {
-        String[] fields = parseFieldName(fieldName);
-        grabber.field = getField(clazzOwner, fields[0]);
+        String[] fields = FieldGrabberHelper.parseFieldName(fieldName);
+        grabber.field = ClassHelper.getField(clazzOwner, fields[0]);
 
         if (!fields[1].equals("")) {
             grabber.grabber = new FieldGrabber(grabber.field.getType(), fields[1]);
@@ -24,17 +24,25 @@ public class FieldGrabber {
     }
 
     public Object getValue(Object obj) {
-        Object value = FieldGrabberHelper.getFieldValue(field, obj);
+        Object value = ClassHelper.getFieldValue(field, obj);
         return grabber != null? grabber.getValue(value): value;
     }
 
     public void setValue(Object obj, Object value) {
-        Object fieldValue = FieldGrabberHelper.getFieldValue(field, obj);
+        Object fieldValue = ClassHelper.getFieldValue(field, obj);
+
+        if (fieldValue == null) {
+            fieldValue = ClassHelper.createInstance(field.getType());
+        }
 
         if (grabber != null) {
             grabber.setValue(fieldValue, value);
         } else {
-            FieldGrabberHelper.setFieldValue(field, obj, value);
+            ClassHelper.setFieldValue(field, obj, value);
         }
+    }
+
+    public Class getType() {
+        return grabber == null? field.getType() : grabber.getType();
     }
 }

@@ -55,12 +55,23 @@ public class PropertyAdapterTest {
 
         adapter.updateProperties(properties, person);
 
-
-
         Assert.assertEquals(properties.getCategory("General").getItem("name").getValue(), "Dario");
         Assert.assertEquals(properties.getCategory("General").getItem("age").getValue(), "15");
         Assert.assertEquals(properties.getCategory("General").getItem("house.number.code").getValue(), "abc");
         Assert.assertEquals(properties.getCategory("Info").getItem("pet.name").getValue(), "Nala");
+    }
+
+    @Test
+    public void shouldCreateObject() {
+        PropertyAdapter<Person> adapter = createAdapter();
+        Person person = createPerson();
+        PropertySet properties = adapter.createPropertySet(person);
+
+        Person p = adapter.createObject(properties);
+
+        Assert.assertEquals(p.getName(), "Cesar");
+        Assert.assertEquals(p.getAge(), 29);
+        Assert.assertEquals(p.getHouse().getNumber().getCode(), "123");
     }
 
     public PropertyAdapter<Person> createAdapter() {
