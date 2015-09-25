@@ -9,6 +9,12 @@ import properties.exception.FieldFormatException;
 public abstract class FieldGrabberHelper {
     private FieldGrabberHelper() {}
 
+    /**
+     * fieldName = "some.field.Name"
+     *  returns:
+     *      [0] = "some"
+     *      [1] = "field.name"
+     */
     public static String[] parseFieldName(String fieldName) {
         checkFieldName(fieldName);
 
@@ -33,7 +39,7 @@ public abstract class FieldGrabberHelper {
             throw new FieldFormatException("Empty fieldName");
         }
         if (fieldName.endsWith(".")) {
-            throw new FieldFormatException("fieldName should not ent with dot");
+            throw new FieldFormatException("fieldName should not end with dot");
         }
     }
 }

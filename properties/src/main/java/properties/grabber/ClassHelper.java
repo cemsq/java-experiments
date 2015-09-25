@@ -14,6 +14,9 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ClassHelper {
 
+    /**
+     * Try to create an instance from clazz.
+     */
     public static Object createInstance(Class clazz) {
         Constructor constructor = getEmptyConstructor(clazz);
         try {
@@ -23,6 +26,10 @@ public class ClassHelper {
         }
     }
 
+    /**
+     * Search a Constructor without parameters for clazz.
+     * It throws an Exception if such Constructor is not found
+     */
     public static Constructor getEmptyConstructor(Class clazz) {
         for (Constructor constructor : clazz.getConstructors()) {
             if (constructor.getParameterCount() == 0) {
@@ -32,6 +39,10 @@ public class ClassHelper {
         throw new ClassHelperException("Empty constructor not found in class: " + clazz.getName());
     }
 
+    /**
+     * Returns a Field object that reflects the specified declared field of the class.
+     * If clazz has no such Field, it search in SuperClass of clazz.
+     */
     public static Field getField(Class clazz, String fieldName) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(fieldName), "fieldName should be not empty or not null");
         Preconditions.checkNotNull(clazz, "clazz should be not null");
@@ -52,6 +63,9 @@ public class ClassHelper {
         return field;
     }
 
+    /**
+     * Returns the value of the field represented by Field, on the specified object
+     */
     public static Object getFieldValue(Field field , Object obj) {
         Object value;
         try {
@@ -66,6 +80,9 @@ public class ClassHelper {
         return value;
     }
 
+    /**
+     * Sets the field represented by Field object on the specified object argument to the specified new value.
+     */
     public static void setFieldValue(Field field, Object object, Object value) {
         try {
             boolean accessible = field.isAccessible();
