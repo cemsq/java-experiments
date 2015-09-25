@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>experiments</artifactId>
+        <groupId>com.cem</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>properties</artifactId>
+    <name>[utils] Properties</name>
+
+    <!--<properties>-->
+        <!--<sonar.sources>src/main</sonar.sources>-->
+        <!--<sonar.tests>src/test</sonar.tests>-->
+    <!--</properties>-->
+
+    <dependencies>
+        <!-- Helix core contains the BundleConfiguration base classes -->
+        <!--<dependency>-->
+            <!--<groupId>com.cg.helix</groupId>-->
+            <!--<artifactId>helix-core</artifactId>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.cg.helix</groupId>-->
+            <!--<artifactId>helix-service-persistence</artifactId>-->
+            <!--&lt;!&ndash;scope>test</scope&ndash;&gt;-->
+        <!--</dependency>-->
+    </dependencies>
+</project>
