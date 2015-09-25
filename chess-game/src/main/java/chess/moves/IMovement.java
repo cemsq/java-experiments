@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IMovement {
 
-    public List<Position> searchMovements(Board board, Position pos);
+    public List<Position> searchMovements(Board board, Position initial);
 
     public String getName();
 }
