@@ -1,5 +1,6 @@
-package fieldhandler;
+package fieldhandler.handlers;
 
+import fieldhandler.FieldHandler;
 import reflection.Reflections;
 
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
-package fieldhandler;
+package fieldhandler.handlers;
 
 import com.google.common.base.Strings;
+import fieldhandler.FieldHandler;
 import reflection.exception.FieldFormatException;
 
 /**
