@@ -1,4 +1,4 @@
-package properties.example.type;
+package properties.grabber.example.type;
 
 /**
  *

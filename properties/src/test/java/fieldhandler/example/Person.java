@@ -1,4 +1,6 @@
-package properties.example;
+package fieldhandler.example;
+
+import fieldhandler.example.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,23 +11,21 @@ import java.util.List;
 public class Person {
 
     private String name;
+
     private int age;
 
     private House house;
 
     private Pet pet;
 
+    private List<Pet> pets;
+
     private List<String> numbers;
 
-    public Person() {
-        house = new House();
-        pet = new Pet();
-    }
+    private Item item;
 
-    public Person(String name, House house, Pet pet) {
-        this.name = name;
-        this.house = house;
-        this.pet = pet;
+    public Person() {
+
     }
 
     public String getName() {
@@ -60,10 +60,27 @@ public class Person {
         this.pet = pet;
     }
 
-    public void setNumbers(String... numbers) {
-        this.numbers = new ArrayList<>();
-        for (String num : numbers) {
-            this.numbers.add(num);
-        }
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
+
+    public void setNumbers(List<String> numbers) {
+        this.numbers = numbers;
+    }
+
+    public List<String> getNumbers() {
+        return numbers;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

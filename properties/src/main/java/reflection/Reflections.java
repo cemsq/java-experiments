@@ -1,28 +1,35 @@
-package properties.grabber;
+package reflection;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import properties.exception.ClassHelperException;
+import reflection.exception.ConstructorNotFoundException;
 import reflection.exception.FieldNotFoundException;
+import reflection.exception.ReflectionsException;
+import util.StringsUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *
  */
-public class ClassHelper {
+public class Reflections {
+
+    private Reflections() {}
 
     /**
      * Try to create an instance from clazz.
      */
-    public static Object createInstance(Class clazz) {
+    public static<T> T createInstance(Class<T> clazz) {
         Constructor constructor = getEmptyConstructor(clazz);
         try {
-            return constructor.newInstance();
+            return (T)constructor.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ClassHelperException("could not instantiate class: " + clazz, e);
+            throw new ReflectionsException("could not instantiate class: " + clazz, e);
         }
     }
 
@@ -36,7 +43,7 @@ public class ClassHelper {
                 return constructor;
             }
         }
-        throw new ClassHelperException("Empty constructor not found in class: " + clazz.getName());
+        throw new ConstructorNotFoundException(clazz);
     }
 
     /**
@@ -71,11 +78,13 @@ public class ClassHelper {
         try {
             boolean accessible = field.isAccessible();
             field.setAccessible(true);
+
             value = field.get(obj);
+
             field.setAccessible(accessible);
 
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Something goes really wrong", e);
+            throw new ReflectionsException("Something goes really wrong", e);
         }
         return value;
     }
@@ -92,7 +101,58 @@ public class ClassHelper {
 
             field.setAccessible(accessible);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Something goes really wrong", e);
+            throw new ReflectionsException("Something goes really wrong", e);
         }
+    }
+
+    public static Method getter(Class clazz, String field) {
+        try {
+            Field f = getField(clazz, field);
+
+            return clazz.getMethod("get" + StringsUtil.capitalize(field));
+        } catch (NoSuchMethodException e) {
+            throw new ReflectionsException("Getter Method not found for field: " + field);
+        }
+    }
+
+    public static Method setter(Class clazz, String field) {
+        try {
+            Field f = getField(clazz, field);
+
+            return clazz.getMethod("set" + StringsUtil.capitalize(field), f.getType());
+        } catch (NoSuchMethodException e) {
+            throw new ReflectionsException("Setter Method not found for field: " + field);
+        }
+    }
+
+    public static Object invoke(Method method, Object obj, Object... args) {
+        try {
+            return method.invoke(obj, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new ReflectionsException("Unable to call method: " + method.getName(), e);
+        }
+    }
+
+    public static Class getType(Field field) {
+        if (field.getType().equals(List.class)) {
+            return extractGenericType(field.getGenericType().getTypeName());
+        } else {
+            return field.getType();
+        }
+    }
+
+    public static Class extractGenericType(String type) {
+        int p1 = type.indexOf("<") + 1;
+        int p2 = type.indexOf(">");
+
+        if (p1 < p2) {
+            String name = type.substring(p1, p2);
+            try {
+                return Class.forName(name);
+            } catch (ClassNotFoundException e) {
+                throw new ReflectionsException("Class not found: " + name);
+            }
+        }
+        throw new ReflectionsException(type + " is not a Generic Type");
     }
 }

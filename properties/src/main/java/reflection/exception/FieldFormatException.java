@@ -1,4 +1,4 @@
-package properties.exception;
+package reflection.exception;
 
 /**
  *

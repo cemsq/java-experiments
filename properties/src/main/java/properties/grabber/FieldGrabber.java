@@ -36,6 +36,7 @@ public class FieldGrabber {
         }
 
         if (grabber != null) {
+            ClassHelper.setFieldValue(field, obj, fieldValue);
             grabber.setValue(fieldValue, value);
         } else {
             ClassHelper.setFieldValue(field, obj, value);

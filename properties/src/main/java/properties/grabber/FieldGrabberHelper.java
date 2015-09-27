@@ -1,7 +1,7 @@
 package properties.grabber;
 
 import com.google.common.base.Strings;
-import properties.exception.FieldFormatException;
+import reflection.exception.FieldFormatException;
 
 /**
  *

@@ -3,7 +3,7 @@ package properties.grabber;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import properties.exception.FieldFormatException;
+import reflection.exception.FieldFormatException;
 
 /**
  *

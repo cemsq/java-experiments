@@ -1,4 +1,4 @@
-package properties.example;
+package fieldhandler.example;
 
 /**
  *

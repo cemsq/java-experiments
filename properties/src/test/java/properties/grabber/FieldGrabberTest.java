@@ -1,12 +1,12 @@
 package properties.grabber;
 
+import fieldhandler.example.*;
+import fieldhandler.example.Number;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import properties.example.*;
-import properties.example.Number;
-import properties.example.type.EnumType;
-import properties.example.type.RootType;
+import properties.grabber.example.type.EnumType;
+import properties.grabber.example.type.RootType;
 
 import java.util.Arrays;
 
@@ -43,7 +43,7 @@ public class FieldGrabberTest {
 
         return new Object[][] {
                 {Person.class, "name", person, "Cesar"},
-                {Person.class, "house.number.code", person, "123"},
+                {Person.class, "house.number.code", person, "abc"},
                 {Person.class, "pet.name", person, "Linda"}
         };
     }
@@ -55,7 +55,7 @@ public class FieldGrabberTest {
         return new Object[][] {
                 {Person.class, "name", person, "Dario"},
                 {Person.class, "age", person, 20},
-                {Person.class, "house.number.code", person, "abcd"},
+                {Person.class, "house.number.code", person, "123"},
                 {Person.class, "pet.name", person, "Nala"}
         };
     }
@@ -75,7 +75,7 @@ public class FieldGrabberTest {
     }
 
     public Person createPerson() {
-        return new Person("Cesar", new House(new Number("123")), new Pet("Linda"));
+        return PersonProvider.create("Cesar", 29, Arrays.asList("1", "2", "3"), new Pet("Linda"), new House(new Number("abc")));
     }
 }
 

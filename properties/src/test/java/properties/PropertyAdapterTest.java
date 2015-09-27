@@ -1,10 +1,12 @@
 package properties;
 
+import fieldhandler.example.*;
+import fieldhandler.example.Number;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import properties.example.*;
-import properties.example.Number;
 import properties.properties.PropertySet;
+
+import java.util.Arrays;
 
 /**
  *
@@ -65,6 +67,7 @@ public class PropertyAdapterTest {
     public void shouldCreateObject() {
         PropertyAdapter<Person> adapter = createAdapter();
         Person person = createPerson();
+
         PropertySet properties = adapter.createPropertySet(person);
 
         Person p = adapter.createObject(properties);
@@ -86,8 +89,7 @@ public class PropertyAdapterTest {
     }
 
     public Person createPerson() {
-        Person person = new Person("Cesar", new House(new properties.example.Number("123")), new Pet("Linda"));
-        person.setAge(29);
+        Person person = PersonProvider.create("Cesar", 29, Arrays.asList("1", "2", "3"), new Pet("Linda"), new House(new Number("abc")));
         return person;
     }
 }
