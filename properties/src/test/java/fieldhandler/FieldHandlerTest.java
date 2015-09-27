@@ -139,16 +139,16 @@ public class FieldHandlerTest {
 
         return new Object[][] {
                 // flat field handler
-                {FieldHandlers.flat(Person.class, "name"), person, "Cesar"},
-                {FieldHandlers.flat(Person.class, "age"), person, 29},
-                {FieldHandlers.flat(Person.class, "numbers"), person, Arrays.asList("1", "2", "3")},
+                {FieldHandlers.create(Person.class, "name"), person, "Cesar"},
+                {FieldHandlers.create(Person.class, "age"), person, 29},
+                {FieldHandlers.create(Person.class, "numbers"), person, Arrays.asList("1", "2", "3")},
 
                 // composite field handler
-                {FieldHandlers.composite(Person.class, "pet.name"), person, "Linda"},
-                {FieldHandlers.composite(Person.class, "house.number.code"), person, "abc"},
+                {FieldHandlers.create(Person.class, "pet.name"), person, "Linda"},
+                {FieldHandlers.create(Person.class, "house.number.code"), person, "abc"},
 
                 // array field handler
-                {FieldHandlers.array(Person.class, "pets.name"), person, Arrays.asList("Linda", "Canela", "Nala")},
+                {FieldHandlers.create(Person.class, "pets.name"), person, Arrays.asList("Linda", "Canela", "Nala")},
 
                 // generic handler
                 {FieldHandlers.create(Person.class, "name"), person, "Cesar"},

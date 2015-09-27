@@ -13,45 +13,66 @@ import java.util.List;
  */
 public class FieldHandlers {
 
+//    public static FieldHandler create(Class clazz, String field) {
+//        String[] fields = parseFieldName(field);
+//
+//        // flat
+//        if (fields[1].equals("")) {
+//            return flat(clazz, fields[0]);
+//
+//        } else {
+//            // composite
+//            Field f = Reflections.getField(clazz, fields[0]);
+//            if (f.getType().equals(List.class)) {
+//                return array(clazz, fields[0], fields[1]);
+//            }
+//
+//            return composite(clazz, fields[0], fields[1]);
+//        }
+//    }
+
     public static FieldHandler create(Class clazz, String field) {
         String[] fields = parseFieldName(field);
+        String owner = fields[0];
+        String composite = fields[1];
+
+        FlatFieldHandler flat = new FlatFieldHandler(clazz, owner);
 
         // flat
         if (fields[1].equals("")) {
-            return flat(clazz, fields[0]);
+            return flat;
 
         } else {
             // composite
-            Field f = Reflections.getField(clazz, fields[0]);
-            if (f.getType().equals(List.class)) {
-                return array(clazz, fields[0], fields[1]);
+            if (flat.isArray()) {
+                return new ArrayFieldHandler(flat, create(flat.getFieldType(), composite));
             }
 
-            return composite(clazz, fields[0], fields[1]);
+            return new CompositeFieldHandler(flat, create(flat.getFieldType(), composite));
         }
     }
 
-    public static FlatFieldHandler flat(Class clazz, String field) {
-        return new FlatFieldHandler(clazz, field);
-    }
-
-    public static CompositeFieldHandler composite(Class clazz, String field) {
-        String[] fields = parseFieldName(field);
-        return composite(clazz, fields[0], fields[1]);
-    }
-
-    public static CompositeFieldHandler composite(Class clazz, String field, String composite) {
-        return new CompositeFieldHandler(clazz, field, composite);
-    }
-
-    public static ArrayFieldHandler array(Class clazz, String field) {
-        String[] fields = parseFieldName(field);
-        return array(clazz, fields[0], fields[1]);
-    }
-
-    public static ArrayFieldHandler array(Class clazz, String field, String composite) {
-        return new ArrayFieldHandler(clazz, field, composite);
-    }
+//    public static FlatFieldHandler flat(Class clazz, String field) {
+//        return new FlatFieldHandler(clazz, field);
+//    }
+//
+//    public static CompositeFieldHandler composite(Class clazz, String field) {
+//        String[] fields = parseFieldName(field);
+//        return composite(clazz, fields[0], fields[1]);
+//    }
+//
+//    public static CompositeFieldHandler composite(Class clazz, String field, String composite) {
+//        return new CompositeFieldHandler(clazz, field, composite);
+//    }
+//
+//    public static ArrayFieldHandler array(Class clazz, String field) {
+//        String[] fields = parseFieldName(field);
+//        return array(clazz, fields[0], fields[1]);
+//    }
+//
+//    public static ArrayFieldHandler array(Class clazz, String field, String composite) {
+//        return new ArrayFieldHandler(clazz, field, composite);
+//    }
 
     /**
      * fieldName = "some.field.Name"

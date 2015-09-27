@@ -2,31 +2,22 @@ package fieldhandler;
 
 import reflection.Reflections;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
-public class ArrayFieldHandler implements FieldHandler {
+public class ArrayFieldHandler extends CompositeFieldHandler implements FieldHandler {
 
-    private Class fieldType;
-    private FieldHandler array;
-    private FieldHandler composite;
-
-    ArrayFieldHandler(Class clazz, String field, String composite) {
-        Field f = Reflections.getField(clazz, field);
-        fieldType = Reflections.getType(f);
-
-        this.array = FieldHandlers.create(clazz, field);
-        this.composite = FieldHandlers.create(fieldType, composite);
+    public ArrayFieldHandler(FlatFieldHandler owner, FieldHandler composite) {
+        super(owner, composite);
     }
 
     @Override
     public Object get(Object obj) {
         List ret = null;
-        List list = (List)array.get(obj);
+        List list = (List)owner.get(obj);
 
         if (list != null) {
             ret = new ArrayList();
@@ -43,11 +34,11 @@ public class ArrayFieldHandler implements FieldHandler {
         List list = new ArrayList();
 
         for (Object element : (List)value) {
-            Object newObject = Reflections.createInstance(fieldType);
+            Object newObject = Reflections.createInstance(owner.getFieldType());
             composite.set(newObject, element);
             list.add(newObject);
         }
 
-        array.set(obj, list);
+        owner.set(obj, list);
     }
 }

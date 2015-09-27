@@ -1,23 +1,18 @@
 package fieldhandler;
 
 import reflection.Reflections;
-import java.lang.reflect.Field;
 
 /**
  *
  */
 public class CompositeFieldHandler implements FieldHandler {
 
-    private Class fieldType;
-    private FieldHandler owner;
-    private FieldHandler composite;
+    protected FlatFieldHandler owner;
+    protected FieldHandler composite;
 
-    CompositeFieldHandler(Class clazz, String field, String composite) {
-        Field f = Reflections.getField(clazz, field);
-        fieldType = f.getType();
-
-        this.owner = FieldHandlers.create(clazz, field);
-        this.composite = FieldHandlers.create(fieldType, composite);
+    public CompositeFieldHandler(FlatFieldHandler owner, FieldHandler composite) {
+        this.owner = owner;
+        this.composite = composite;
     }
 
     @Override
@@ -31,7 +26,7 @@ public class CompositeFieldHandler implements FieldHandler {
         Object field = owner.get(obj);
 
         if (field == null) {
-            field = Reflections.createInstance(fieldType);
+            field = Reflections.createInstance(owner.getFieldType());
             owner.set(obj, field);
         }
 
