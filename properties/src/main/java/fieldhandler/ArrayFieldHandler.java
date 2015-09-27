@@ -12,21 +12,21 @@ import java.util.List;
 public class ArrayFieldHandler implements FieldHandler {
 
     private Class fieldType;
-    private FieldHandler owner;
+    private FieldHandler array;
     private FieldHandler composite;
 
     ArrayFieldHandler(Class clazz, String field, String composite) {
         Field f = Reflections.getField(clazz, field);
         fieldType = Reflections.getType(f);
 
-        this.owner = FieldHandlers.create(clazz, field);
+        this.array = FieldHandlers.create(clazz, field);
         this.composite = FieldHandlers.create(fieldType, composite);
     }
 
     @Override
     public Object get(Object obj) {
         List ret = null;
-        List list = (List)owner.get(obj);
+        List list = (List)array.get(obj);
 
         if (list != null) {
             ret = new ArrayList();
@@ -48,6 +48,6 @@ public class ArrayFieldHandler implements FieldHandler {
             list.add(newObject);
         }
 
-        owner.set(obj, list);
+        array.set(obj, list);
     }
 }

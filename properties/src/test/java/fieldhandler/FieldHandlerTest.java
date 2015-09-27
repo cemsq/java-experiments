@@ -26,8 +26,10 @@ public class FieldHandlerTest {
     @Test(dataProvider = "creatingProvider")
     public void creatingHandler(Class clazz, String field, boolean shouldFail) {
         boolean failed = false;
+        FieldHandler handler;
         try {
-            Assert.assertNotNull(FieldHandlers.create(clazz, field));
+            handler = FieldHandlers.create(clazz, field);
+            Assert.assertNotNull(handler);
 
         }catch (FieldNotFoundException e) {
             failed = true;

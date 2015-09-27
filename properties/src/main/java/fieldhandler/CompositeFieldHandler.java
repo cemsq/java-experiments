@@ -1,7 +1,6 @@
 package fieldhandler;
 
 import reflection.Reflections;
-
 import java.lang.reflect.Field;
 
 /**
@@ -18,7 +17,7 @@ public class CompositeFieldHandler implements FieldHandler {
         fieldType = f.getType();
 
         this.owner = FieldHandlers.create(clazz, field);
-        this.composite = FieldHandlers.create(f.getType(), composite);
+        this.composite = FieldHandlers.create(fieldType, composite);
     }
 
     @Override
