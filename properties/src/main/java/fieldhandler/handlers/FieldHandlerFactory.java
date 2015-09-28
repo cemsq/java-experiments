@@ -2,19 +2,27 @@ package fieldhandler.handlers;
 
 import com.google.common.base.Strings;
 import fieldhandler.FieldHandler;
+import fieldhandler.AccessorType;
+import fieldhandler.accessor.FieldAccessor;
 import reflection.exception.FieldFormatException;
 
 /**
  *
  */
-public class FieldHandlers {
+public class FieldHandlerFactory {
 
     public static FieldHandler create(Class clazz, String field) {
+        return create(clazz, field, FieldAccessor.DEFAULT_TYPE);
+    }
+
+    public static FieldHandler create(Class clazz, String field, AccessorType accessorType) {
         String[] fields = parseFieldName(field);
         String owner = fields[0];
         String composite = fields[1];
 
-        FlatFieldHandler flat = new FlatFieldHandler(clazz, owner);
+        FieldAccessor accessor = FieldAccessor.factory(clazz, owner, accessorType);
+
+        SimpleFieldHandler flat = new SimpleFieldHandler(accessor);
 
         // flat
         if (fields[1].equals("")) {
@@ -23,11 +31,11 @@ public class FieldHandlers {
         } else {
             // array - composite
             if (flat.isArray()) {
-                return new ArrayFieldHandler(flat, create(flat.getFieldType(), composite));
+                return new ArrayFieldHandler(flat, create(flat.getFieldType(), composite, accessorType));
             }
 
             // composite
-            return new CompositeFieldHandler(flat, create(flat.getFieldType(), composite));
+            return new CompositeFieldHandler(flat, create(flat.getFieldType(), composite, accessorType));
         }
     }
 

@@ -8,10 +8,10 @@ import reflection.Reflections;
  */
 public class CompositeFieldHandler implements FieldHandler {
 
-    protected FlatFieldHandler owner;
+    protected SimpleFieldHandler owner;
     protected FieldHandler composite;
 
-    public CompositeFieldHandler(FlatFieldHandler owner, FieldHandler composite) {
+    public CompositeFieldHandler(SimpleFieldHandler owner, FieldHandler composite) {
         this.owner = owner;
         this.composite = composite;
     }

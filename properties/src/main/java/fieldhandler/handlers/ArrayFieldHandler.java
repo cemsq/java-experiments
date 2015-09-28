@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ArrayFieldHandler extends CompositeFieldHandler implements FieldHandler {
 
-    public ArrayFieldHandler(FlatFieldHandler owner, FieldHandler composite) {
+    public ArrayFieldHandler(SimpleFieldHandler owner, FieldHandler composite) {
         super(owner, composite);
     }
 

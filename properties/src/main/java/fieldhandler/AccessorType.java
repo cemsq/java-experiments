@@ -1,4 +1,4 @@
-package fieldhandler.accessor;
+package fieldhandler;
 
 /**
  *

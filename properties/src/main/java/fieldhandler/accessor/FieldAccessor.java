@@ -1,5 +1,6 @@
 package fieldhandler.accessor;
 
+import fieldhandler.AccessorType;
 import reflection.Reflections;
 
 import java.lang.reflect.Field;
@@ -10,14 +11,24 @@ import java.util.List;
  *
  */
 public abstract class FieldAccessor<T> {
+    public static final AccessorType DEFAULT_TYPE = AccessorType.GETTER_SETTER;
+
+    private Class fieldType;
     private Field field;
     private boolean isArray;
 
+    public FieldAccessor(Class<T> clazz, String field) {
+        this.field = Reflections.getField(clazz, field);
+        this.fieldType = Reflections.getType(this.field);
+        this.isArray = this.field.getType().equals(List.class);
+    }
+
     public abstract Object get(T obj);
+
     public abstract void set(T obj , Object value);
 
     public Class getType() {
-        return field.getType();
+        return fieldType;
     }
 
     public boolean isArray() {
@@ -27,14 +38,6 @@ public abstract class FieldAccessor<T> {
     protected Field getField() {
         return field;
     }
-
-    public FieldAccessor(Class<T> clazz, String field) {
-        this.field = Reflections.getField(clazz, field);
-        isArray = getType().equals(List.class);
-    }
-
-    // ************************************************************************
-    public static final AccessorType DEFAULT_TYPE = AccessorType.GETTER_SETTER;
 
     public static<K> FieldAccessor<K> factory(Class<K> clazz, String field) {
         return factory(clazz, field, DEFAULT_TYPE);

@@ -7,8 +7,8 @@ import fieldhandler.example.item.Item;
 import fieldhandler.example.item.ItemIngredient;
 import fieldhandler.handlers.ArrayFieldHandler;
 import fieldhandler.handlers.CompositeFieldHandler;
-import fieldhandler.handlers.FieldHandlers;
-import fieldhandler.handlers.FlatFieldHandler;
+import fieldhandler.handlers.FieldHandlerFactory;
+import fieldhandler.handlers.SimpleFieldHandler;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -29,27 +29,19 @@ public class FieldHandlerTest {
 
     @Test(dataProvider = "creatingProvider")
     public void creatingHandler(Class clazz, String field, boolean shouldFail) {
-        boolean failed = false;
-        FieldHandler handler;
         try {
-            handler = FieldHandlers.create(clazz, field);
+            FieldHandler handler = FieldHandlerFactory.create(clazz, field);
             Assert.assertNotNull(handler);
 
+            Assert.assertFalse(shouldFail, "it should fail, but it didn't");
         }catch (FieldNotFoundException e) {
-            failed = true;
-            if(!shouldFail) {
-                Assert.fail("it shouldn't fail", e);
-            }
-        }
-
-        if (shouldFail && !failed) {
-            Assert.fail("it should fail, but it didn't");
+            Assert.assertTrue(shouldFail, "it shouldn't fail. " + e.getMessage());
         }
     }
 
     @Test(dataProvider = "creatorProvider")
     public void shouldCreateProperHandler(Class clazz, String field, Class<? extends FieldHandler> handler) {
-        Assert.assertEquals(FieldHandlers.create(clazz, field).getClass(), handler);
+        Assert.assertEquals(FieldHandlerFactory.create(clazz, field).getClass(), handler);
     }
 
     @Test(dataProvider = "getterProvider")
@@ -82,7 +74,7 @@ public class FieldHandlerTest {
     @DataProvider
     public Object[][] creatorProvider() {
         return new Object[][]{
-                {Person.class, "name", FlatFieldHandler.class},
+                {Person.class, "name", SimpleFieldHandler.class},
                 {Person.class, "pet.name", CompositeFieldHandler.class},
                 {Person.class, "pets.name", ArrayFieldHandler.class},
                 {Item.class, "itemIngredients.ingredient.name", ArrayFieldHandler.class},
@@ -143,21 +135,21 @@ public class FieldHandlerTest {
 
         return new Object[][] {
                 // flat field handler
-                {FieldHandlers.create(Person.class, "name"), person, "Cesar"},
-                {FieldHandlers.create(Person.class, "age"), person, 29},
-                {FieldHandlers.create(Person.class, "numbers"), person, Arrays.asList("1", "2", "3")},
+                {FieldHandlerFactory.create(Person.class, "name"), person, "Cesar"},
+                {FieldHandlerFactory.create(Person.class, "age"), person, 29},
+                {FieldHandlerFactory.create(Person.class, "numbers"), person, Arrays.asList("1", "2", "3")},
 
                 // composite field handler
-                {FieldHandlers.create(Person.class, "pet.name"), person, "Linda"},
-                {FieldHandlers.create(Person.class, "house.number.code"), person, "abc"},
+                {FieldHandlerFactory.create(Person.class, "pet.name"), person, "Linda"},
+                {FieldHandlerFactory.create(Person.class, "house.number.code"), person, "abc"},
 
                 // array field handler
-                {FieldHandlers.create(Person.class, "pets.name"), person, Arrays.asList("Linda", "Canela", "Nala")},
+                {FieldHandlerFactory.create(Person.class, "pets.name"), person, Arrays.asList("Linda", "Canela", "Nala")},
 
                 // generic handler
-                {FieldHandlers.create(Person.class, "name"), person, "Cesar"},
-                {FieldHandlers.create(Person.class, "house.number.code"), person, "abc"},
-                {FieldHandlers.create(Person.class, "item.itemIngredients.ingredient.name"), person, Arrays.asList("A", "B", "C")},
+                {FieldHandlerFactory.create(Person.class, "name"), person, "Cesar"},
+                {FieldHandlerFactory.create(Person.class, "house.number.code"), person, "abc"},
+                {FieldHandlerFactory.create(Person.class, "item.itemIngredients.ingredient.name"), person, Arrays.asList("A", "B", "C")},
         };
     }
 }
