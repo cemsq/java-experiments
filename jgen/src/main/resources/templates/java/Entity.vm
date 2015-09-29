@@ -1,0 +1,43 @@
+package $Package;
+
+// <regenerate>
+import com.cg.helix.persistence.metadata.annotation.BusinessObject;
+import com.cg.helix.persistence.metadata.annotation.DatabaseTable;
+import com.cg.helix.persistence.metadata.annotation.PrimaryKey;
+import com.cg.helix.persistence.metadata.annotation.PrimaryKeyGenerator;
+import com.cg.helix.persistence.metadata.annotation.TableIndex;
+import com.cg.helix.schemadictionary.annotation.ComplexType;
+import com.cg.helix.schemadictionary.annotation.Element;
+import com.cg.helix.util.annotation.Flag;
+
+import java.util.List;
+
+$Imports
+
+/**
+ * $Description
+ * <p>
+ * Created by StormJGen
+ * @see $util.objectName("EntityService", $Entity)
+ */
+@ComplexType(optimisticLocking = true)
+@BusinessObject(stampChanges = Flag.TRUE)
+@DatabaseTable(
+    tableName = "$Entity",
+    primaryKey = @PrimaryKey(name = "$pkName", elementNames = {$pkElements}, strategy = PrimaryKeyGenerator.GENERATED_BY_DB)#if(${Indexes.size()}>0),
+    indexes = {
+#foreach($index in $Indexes)
+        $index
+#end
+    }
+)#else
+)
+#end
+// </regenerate>
+public class $Entity extends ${Entity}Base {
+
+    // write your code here
+    public $Entity(){
+
+    }
+}

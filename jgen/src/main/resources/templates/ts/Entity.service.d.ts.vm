@@ -1,0 +1,24 @@
+/// <reference path="../../../references.ts"/>
+/// <reference path="../IStormService.ts"/>
+
+// Please do not modify this file
+
+declare module storm.backend.services {
+
+    // service interface
+    export interface I${Entity}Service {
+
+#foreach($method in $ServiceMethods)
+        ${method.name}(${method.parameters}): IResult< ${method.return} >;
+
+#end
+    }
+
+    // service parameter interface
+    export interface I${Entity}  {
+
+#foreach($member in $Members)
+        $member.name: $member.tsType;
+#end
+    }
+}

@@ -1,0 +1,28 @@
+/// <reference path="${Entity}.service.d.ts"/>
+
+// Please do not modify this file
+
+module storm.backend.services {
+
+    export class ${Entity} implements I${Entity} {
+
+        public __type: string = "/com/cgm/storm/model/${entity}/${Entity}";
+#foreach($id in $EntityIds)
+        public $id.name: $id.tsType = $id.defaultValue;
+#end
+
+        constructor(
+#foreach($member in $EntityNoIds)
+#if( $foreach.hasNext )
+            public $member.name: $member.tsType = $member.defaultValue,
+#else
+            public $member.name: $member.tsType = $member.defaultValue
+#end
+#end
+        ) {
+
+        }
+    }
+}
+
+

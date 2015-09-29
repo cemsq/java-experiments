@@ -1,0 +1,23 @@
+/// <reference path="../../../references.ts" />
+/// <reference path="${Entity}.service.d.ts" />
+
+// Please do not modify this file
+
+module storm.backend.services {
+
+    'use strict';
+
+    var factoryName = 'storm.backend.services.${ServiceName}';
+
+    // injectable: this Service injects a CGM Service by its URL: we have to pass it in as an array
+
+    // this Service injects a CGM Service by its URL: we have to pass it in as an array
+    ${ServiceName}Fn.$inject = ['/com/cgm/storm/${ServiceName}'];
+    function ${ServiceName}Fn(${ServiceName} :I${ServiceName} ) : I${ServiceName} {
+        return  ${ServiceName};
+    }
+
+    angular.module('storm.backend.services').factory(factoryName, ${ServiceName}Fn);
+
+    // TODO: find a nice typescript-way for registering such services via class
+}

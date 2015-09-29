@@ -1,0 +1,42 @@
+package $Package;
+
+// <regenerate>
+import com.cg.helix.persistence.metadata.annotation.BusinessObject;
+import com.cg.helix.persistence.metadata.annotation.DatabaseTable;
+import com.cg.helix.persistence.metadata.annotation.PrimaryKey;
+import com.cg.helix.persistence.metadata.annotation.TableIndex;
+import com.cg.helix.schemadictionary.annotation.ComplexType;
+import com.cg.helix.schemadictionary.annotation.Element;
+import com.cg.helix.util.annotation.Flag;
+import com.cgm.storm.enumeration.EnumEntityBase;
+
+import java.util.List;
+
+$Imports
+
+/**
+ * $Description
+ * <p>
+ * Created by StormJGen
+ * @see $util.objectName("EnumValue", $Entity);
+ */
+@ComplexType(optimisticLocking = true)
+@BusinessObject(stampChanges = Flag.TRUE)
+@DatabaseTable(
+    tableName = "$Entity",
+    primaryKey = @PrimaryKey(name = "$pkName", elementNames = {$pkElements})#if(${Indexes.size()}>0),
+    indexes = {
+#foreach($index in $Indexes)
+        $index
+#end
+    }
+#end
+)
+// </regenerate>
+public class $Entity extends EnumEntityBase {
+
+    // write your code here
+    public $Entity(){
+
+    }
+}

@@ -1,0 +1,20 @@
+package $Package;
+
+// <regenerate>
+import com.cg.helix.mib.annotation.ComponentInterface;
+import com.cg.helix.mib.annotation.Input;
+import java.util.List;
+
+$Imports
+
+/**
+ * CRUD Service for $Entity
+ * Created by StormJGen
+ */
+@ComponentInterface
+//</regenerate>
+public interface ${Entity}Service extends ${Entity}ServiceBaseApi {
+
+    // write your code here
+
+}

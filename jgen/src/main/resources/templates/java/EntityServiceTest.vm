@@ -1,0 +1,46 @@
+package $Package;
+
+import com.cg.helix.context.annotation.Inject;
+import com.cg.helix.integrationtest.BaseIntegrationTest;
+import com.cg.helix.integrationtest.annotation.DatabaseTest;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+$Imports
+
+#parse($HeaderTemplate)
+@DatabaseTest
+public class ${Entity}ServiceTest extends BaseIntegrationTest {
+
+@Inject
+private $Service service;
+
+@Test
+public void shouldSaveAndRead1${Entity}() {
+//given
+//setup a $Entity and save it
+$Entity $entity = new ${Entity}();
+
+// please set values to $entity
+// ...
+
+// save $Entity
+String id = service.save($entity).getId();
+
+//test configs setup completed,
+//ensure that the system clean all internal caches
+completeTestSetup();
+
+// when
+List<$Entity> list = service.getAll();
+
+// then
+Assert.assertEquals(list.size(), 1);
+
+$Entity ${entity}FromDB = list.get(0);
+Assert.assertEquals(${entity}FromDB.getId(), id);
+}
+}

@@ -1,0 +1,46 @@
+package $Package;
+
+import com.cg.helix.databean.BaseDataBean;
+import com.cg.helix.persistence.metadata.annotation.Relation;
+import com.cg.helix.persistence.metadata.annotation.RelationJoin;
+import com.cg.helix.persistence.metadata.annotation.CardinalityType;
+import com.cg.helix.schemadictionary.annotation.ComplexType;
+import com.cg.helix.schemadictionary.annotation.Element;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
+
+import java.util.List;
+
+$Imports
+
+/**
+ * Created by StormJGen
+ *
+ * Please do not modify this file
+ *    @see $util.objectName("Entity", $Entity)
+ */
+@ComplexType
+public class ${Entity}Base extends BaseDataBean {
+
+#foreach($member in $Members)
+    $member.helixAnnotation
+    private $member.type $member.name;
+
+#end
+    public ${Entity}Base() {
+
+    }
+
+    // <editor-fold desc = "--- Getter and Setter ---">
+#foreach($member in $Members)
+    public $member.type get$util.pascalCase($member.name)() {
+        return $member.name;
+    }
+
+    public void set$util.pascalCase($member.name)($member.type $member.name) {
+        this.$member.name = $member.name;
+    }
+
+#end
+    // </editor-fold>
+}

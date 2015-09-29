@@ -1,0 +1,22 @@
+package $Package;
+
+// <regenerate>
+import com.cg.helix.context.annotation.SingletonScope;
+import com.cg.helix.mib.server.annotation.Component;
+
+$Imports
+
+/**
+ * CRUD-Component implementation for $Entity
+ * Created by StormJGen
+ */
+@SingletonScope
+@Component
+// </regenerate>
+public class ${Entity}ServiceImpl
+        extends ${Entity}ServiceBaseImpl
+        implements ${Entity}Service {
+
+    // write your code here
+
+}

@@ -1,0 +1,10 @@
+## The namespace has to be provided here, otherwise this element is in the empty namespace
+##      and we would have to switch the element and its subelement to the Helix namespace manually
+<BusinessObject xmlns="${HelixNamespace}" name="/cgm/helix/Resource">
+    <Columns>resourceId, localeId, resourceTypeId, catalogId, name, property, value</Columns>
+    <Data>
+#foreach($value in $Values)
+        <Row>"${value.resourceId}", "en_US", "label", "${EnumValueCatalogId}", "Enumeration", "${EnumValueName}${util.pascalCase(${value.code})}", #if($value.displayText)"${value.displayText}"#{else}"${value.code}"#end</Row>
+#end
+    </Data>
+</BusinessObject>

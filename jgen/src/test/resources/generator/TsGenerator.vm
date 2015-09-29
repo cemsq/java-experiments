@@ -1,0 +1,19 @@
+$Entity
+#foreach($member in $Members)
+    $member.name: $member.tsType;
+#end
+
+// EntityIds
+#foreach($id in $EntityIds)
+    $id.name: $id.tsType $id.defaultValue
+#end
+
+// EntityNoIds
+#foreach($m in $EntityNoIds)
+    $m.name: $m.tsType = $m.defaultValue
+#end
+
+$ServiceName
+#foreach($method in $ServiceMethods)
+    ${method.name}(${method.parameters}): IResult< ${method.return} >
+#end

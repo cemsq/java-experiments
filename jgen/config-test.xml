@@ -1,0 +1,155 @@
+<!--
+    the Config definitions for JGen.
+
+    appPath     = main project folder
+    rootPackage = main project package
+    jarPath     = jar file where the api is
+    dictionary  = path to the file containing the type definitions
+-->
+<Config
+		appPath     = "c:/temp/storm-test/Storm"
+		rootPackage = "com.cgm.storm.stormshell"
+        jarPath     = "server/stormshell/api/target/stormshell-api-1.0.0-SNAPSHOT.jar"
+        dictionary  = "typeNameDictionary.xml"
+        schema      = "pdexSchema.dsd"
+		>
+
+    <IgnoreColumns>
+        <Column name = "Version"/>
+        <Column name = "CreatedOn"/>
+        <Column name = "CreatedBy"/>
+        <Column name = "LastModifiedOn"/>
+        <Column name = "LastModifiedBy"/>
+        <Column name = "Deleted"/>
+        <Column name = "DeletedOn"/>
+        <Column name = "DeletedBy"/>
+    </IgnoreColumns>
+
+    <AlwaysGenerate>
+        <FileTemplate id = "EntityBase"/>
+        <FileTemplate id = "EntityServiceBaseApi"/>
+        <FileTemplate id = "EntityServiceBaseImpl"/>
+
+        <FileTemplate id = "Entity"/>
+        <FileTemplate id = "EntityService"/>
+        <FileTemplate id = "EntityServiceImpl"/>
+    </AlwaysGenerate>
+
+    <RegenerateBlock>
+        <FileTemplate id = "Entity"/>
+        <FileTemplate id = "EntityService"/>
+        <FileTemplate id = "EntityServiceImpl"/>
+
+        <FileTemplate id = "EntityServiceTest" />
+        <FileTemplate id = "EntityJSService"/>
+    </RegenerateBlock>
+
+    <IgnoreFileTemplates>
+        <FileTemplate id="EntityServiceTest"/>
+    </IgnoreFileTemplates>
+
+    <Languages>
+			<!-- Java config -->
+			<Java 
+					headerTemplate="templates/JavaHeaderTemplate.vm"
+					sourcePath="src/main/java"
+					>
+                    <FileTemplate
+                        id              ="Entity"
+                        fileName        ="{Entity.name}"
+                        module          ="server/stormshell/api"
+                        relativePackage ="model"
+                        template        ="templates/Entity.vm"
+                            >
+                        <Dependency id = "EntityBase"/>
+                    </FileTemplate>
+
+                    <FileTemplate
+                        id              ="EntityService"
+                        fileName        ="{Entity.name}Service"
+                        module          ="server/stormshell/api"
+                        relativePackage =""
+                        template        ="templates/EntityService.vm"
+                            >
+                        <Dependency id = "EntityServiceBaseApi"/>
+                        <Dependency id = "Entity"/>
+                    </FileTemplate>
+
+                    <FileTemplate
+                        id              ="EntityServiceImpl"
+                        fileName        ="{Entity.name}ServiceImpl"
+                        module          ="server/stormshell/impl"
+                        relativePackage =""
+                        template        ="templates/EntityServiceImpl.vm"
+                            >
+                        <Dependency id = "EntityServiceBaseImpl"/>
+                        <Dependency id = "EntityService"/>
+                        <Dependency id = "Entity"/>
+                    </FileTemplate>
+
+
+                    <FileTemplate
+                        id              ="EntityBase"
+                        fileName        ="{Entity.name}Base"
+                        module          ="server/stormshell/api"
+                        relativePackage ="generated.model"
+                        template        ="templates/EntityBase.vm"
+                            >
+
+                    </FileTemplate>
+
+                    <FileTemplate
+                        id              ="EntityServiceBaseApi"
+                        fileName        ="{Entity.name}ServiceBaseApi"
+                        module          ="server/stormshell/api"
+                        relativePackage ="generated.services"
+                        template        ="templates/EntityServiceBaseApi.vm"
+                            >
+                        <Dependency id ="Entity"/>
+                    </FileTemplate>
+
+                    <FileTemplate
+                        id              ="EntityServiceBaseImpl"
+                        fileName        ="{Entity.name}ServiceBaseImpl"
+                        module          ="server/stormshell/impl"
+                        relativePackage ="generated.services"
+                        template        ="templates/EntityServiceBaseImpl.vm"
+                            >
+                        <Dependency id="Entity"/>
+                        <Dependency id="EntityServiceBaseApi"/>
+                    </FileTemplate>
+
+
+
+                    <FileTemplate
+                            id              ="EntityServiceTest"
+                            fileName        ="{Entity.name}ServiceTest"
+                            module          ="server/stormshell/impl"
+                            sourcePath      ="src/test/java"
+                            relativePackage =""
+                            template        ="templates/EntityServiceTest.vm"
+                            >
+                        <Dependency id="Entity"/>
+                        <Dependency id="EntityService"/>
+                    </FileTemplate>
+			</Java>
+			
+			
+			
+			<!-- JavaScript config -->
+			<JavaScript
+					headerTemplate="templates/jsHeaderTemplate.vm"
+					sourcePath=""
+					>
+					<FileTemplate
+							id              ="EntityJSService"
+							fileName     	="{Entity.Name}.service"
+							module       	="client/test/{Entity.Name}"
+							template     	="templates/jsService.vm"
+							>
+                        <!--Dependency id="EntityService"/-->
+					</FileTemplate>
+			</JavaScript>
+	</Languages>
+
+</Config>

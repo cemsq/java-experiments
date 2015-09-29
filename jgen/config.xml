@@ -1,0 +1,246 @@
+<!--
+    the Config definitions for JGen.
+
+    appPath     = main project folder
+    rootPackage = main project package
+    jarPath     = jar file where the api is
+    dictionary  = path to the file containing the type definitions
+-->
+<Config
+        appPath="../../"
+        rootPackage="com.cgm.storm"
+        jarPath="server/services/api/target/storm-api-1.0.0-SNAPSHOT.jar"
+        dictionary="typeNameDictionary.xml"
+        schema="pdexSchema.dsd"
+        helixNamespace="http://www.cgm.com/2011/helix/metadata"
+
+        databaseProject="storm-database"
+        databaseUpgradeTest="DatabaseUpgradeTest"
+        migrationFile="server/services/database/src/main/resources/executionScripts/migration.xml"
+        >
+
+    <IgnoreColumns>
+        <Column name="Version"/>
+        <Column name="CreatedOn"/>
+        <Column name="CreatedBy"/>
+        <Column name="LastModifiedOn"/>
+        <Column name="LastModifiedBy"/>
+        <Column name="Deleted"/>
+        <Column name="DeletedOn"/>
+        <Column name="DeletedBy"/>
+
+        <Column name="version"/>
+        <Column name="createdOn"/>
+        <Column name="createdBy"/>
+        <Column name="lastModifiedOn"/>
+        <Column name="lastModifiedBy"/>
+        <Column name="deleted"/>
+        <Column name="deletedOn"/>
+        <Column name="deletedBy"/>
+
+    </IgnoreColumns>
+
+    <AlwaysGenerate>
+        <FileTemplate id="EnumValue"/>
+
+        <FileTemplate id="EntityBase"/>
+
+        <FileTemplate id="EntityServiceBaseApi"/>
+        <FileTemplate id="EntityServiceBaseImpl"/>
+
+        <FileTemplate id="Entity_ts"/>
+        <FileTemplate id="Entity_service_d_ts"/>
+        <FileTemplate id="Entity_service_ts"/>
+    </AlwaysGenerate>
+
+    <RegenerateBlock>
+        <FileTemplate id="Entity"/>
+        <FileTemplate id="EntityEnum"/>
+        <FileTemplate id="EntityService"/>
+        <FileTemplate id="EntityServiceImpl"/>
+
+        <FileTemplate id="EntityServiceTest"/>
+        <FileTemplate id="EntityJSService"/>
+    </RegenerateBlock>
+
+    <IgnoreFileTemplates>
+        <FileTemplate id="EntityServiceTest"/>
+    </IgnoreFileTemplates>
+
+    <Languages>
+        <!-- Java config -->
+        <Java>
+            <FileTemplate
+                    id="Entity"
+                    fileName="{Entity}"
+                    module="server/services/api"
+                    sourcePath="src/main/java"
+                    relativePackage="model"
+                    template="templates/java/Entity.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+                <Dependency id="EntityBase"/>
+            </FileTemplate>
+
+            <FileTemplate
+                    id="EntityService"
+                    fileName="{Entity}Service"
+                    module="server/services/api"
+                    sourcePath="src/main/java"
+                    relativePackage=""
+                    template="templates/java/EntityService.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+                <Dependency id="EntityServiceBaseApi"/>
+                <Dependency id="Entity"/>
+            </FileTemplate>
+
+            <FileTemplate
+                    id="EntityServiceImpl"
+                    fileName="{Entity}ServiceImpl"
+                    module="server/services/impl"
+                    sourcePath="src/main/java"
+                    relativePackage=""
+                    template="templates/java/EntityServiceImpl.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+                <Dependency id="EntityServiceBaseImpl"/>
+                <Dependency id="EntityService"/>
+                <Dependency id="Entity"/>
+            </FileTemplate>
+
+
+            <FileTemplate
+                    id="EntityBase"
+                    fileName="{Entity}Base"
+                    module="server/services/api"
+                    sourcePath="src/main/java"
+                    relativePackage="generated.model"
+                    template="templates/java/EntityBase.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+
+            </FileTemplate>
+
+            <FileTemplate
+                    id="EntityServiceBaseApi"
+                    fileName="{Entity}ServiceBaseApi"
+                    module="server/services/api"
+                    sourcePath="src/main/java"
+                    relativePackage="generated.services"
+                    template="templates/java/EntityServiceBaseApi.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+                <Dependency id="Entity"/>
+            </FileTemplate>
+
+            <FileTemplate
+                    id="EntityServiceBaseImpl"
+                    fileName="{Entity}ServiceBaseImpl"
+                    module="server/services/impl"
+                    sourcePath="src/main/java"
+                    relativePackage="generated.services"
+                    template="templates/java/EntityServiceBaseImpl.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+                <Dependency id="Entity"/>
+                <Dependency id="EntityServiceBaseApi"/>
+            </FileTemplate>
+
+            <!-- ================================================================== -->
+
+            <!--<FileTemplate-->
+            <!--id="EntityServiceTest"-->
+            <!--fileName="{Entity}ServiceTest"-->
+            <!--module="server/services/impl"-->
+            <!--sourcePath="src/test/java"-->
+            <!--relativePackage=""-->
+            <!--template="templates/java/EntityServiceTest.vm"-->
+            <!--headerTemplate="templates/java/JavaHeaderTemplate.vm"-->
+            <!-->-->
+            <!--<Dependency id="Entity"/>-->
+            <!--<Dependency id="EntityService"/>-->
+            <!--</FileTemplate>-->
+        </Java>
+
+        <JavaEnum>
+            <FileTemplate
+                    id="EnumValue"
+                    fileName="{Entity}Enum"
+                    module="server/services/api"
+                    sourcePath="src/main/java"
+                    relativePackage="generated.enums"
+                    template="templates/java/EnumValue.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+            </FileTemplate>
+
+            <FileTemplate
+                    id="EntityEnum"
+                    fileName="{Entity}"
+                    module="server/services/api"
+                    sourcePath="src/main/java"
+                    relativePackage="model"
+                    template="templates/java/EntityEnum.vm"
+                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
+                    >
+            </FileTemplate>
+        </JavaEnum>
+
+        <XML>
+            <FileTemplate
+                    id="EntityEnumXml"
+                    fileName="storm.init.enumeration"
+                    module="server/services/database"
+                    sourcePath="src/main/resources/initContent"
+                    relativePackage=""
+                    template="templates/xml/xmlEnumValue.vm"
+                    headerTemplate="templates/emptyHeader.vm"
+                    >
+            </FileTemplate>
+
+            <FileTemplate
+                    id="ResourceXml"
+                    fileName="storm.init.content.Resource.en_US"
+                    module="server/services/database"
+                    sourcePath="src/main/resources/initContent"
+                    relativePackage=""
+                    template="templates/xml/xmlEnumValueResource.vm"
+                    headerTemplate="templates/emptyHeader.vm"
+                    resourceCatalogId="FCD703F1BE628B9242"
+                    >
+            </FileTemplate>
+        </XML>
+
+        <TypeScript>
+            <FileTemplate
+                    id="Entity_ts"
+                    fileName="{Entity}"
+                    module="client"
+                    sourcePath="src/storm/backend/services/{Entity}/"
+                    template="templates/ts/Entity.ts.vm"
+                    headerTemplate="templates/emptyHeader.vm"
+                    >
+            </FileTemplate>
+            <FileTemplate
+                    id="Entity_service_d_ts"
+                    fileName="{Entity}.service.d"
+                    module="client"
+                    sourcePath="src/storm/backend/services/{Entity}/"
+                    template="templates/ts/Entity.service.d.ts.vm"
+                    headerTemplate="templates/emptyHeader.vm"
+                    >
+            </FileTemplate>
+            <FileTemplate
+                    id="Entity_service_ts"
+                    fileName="{Entity}.service"
+                    module="client"
+                    sourcePath="src/storm/backend/services/{Entity}/"
+                    template="templates/ts/Entity.service.ts.vm"
+                    headerTemplate="templates/emptyHeader.vm"
+                    >
+            </FileTemplate>
+        </TypeScript>
+    </Languages>
+
+</Config>

@@ -1,0 +1,82 @@
+=======================================
+        J G E N  R E A D M E
+=======================================
+
++ I M P O R T A N T:
+--------------------
+If you want to add a word immediately after a label, without spaces, label must be between {}: ${label}NextText
+example:
+    if you want: PersonServiceBase
+    you should write: ${Entity}ServiceBase
+
+---------------------------------------------------
+  INJECTABLE LABELS IN TEMPLATE FILES (.vm files)
+---------------------------------------------------
+
+- COMMON LABELS:
+----------------
+$Entity
+    Entity's name
+
+$entity
+    Entity's name with the first letter to lower case
+
+$Members
+    Inject Entity's member list (as object).
+    For each Member you can access the following attributes:
+        name, type, helixAnnotation, length.
+    example use:
+    #foreach($member in $Members)
+        $member.helixAnnotation       // this will be: @Element (length = 10, mandatory = true)
+        $member.type $member.name;    // this will be: String firstName;
+    #end
+
+$Service
+    Inject EntityService's name
+
+$ServiceMethods
+    Inject EntityService's method list. For each method, you can access the following attributes:
+    .name           method name
+    .type           method return type
+    .access         method access (public, protected, private)
+    .parameters     method parameter types
+
+    example use:
+    #foreach($method in $ServiceMethods)
+       $method.type $method.name ($method.parameters)   // this will be: public serviceMethodName(parameterType_1, parameterType_2, ..., parameterType_n)
+    #end
+
+$HeaderTemplate
+    inject the header template name. It should be used together  with Velocity's function: #parse()
+    example use:
+    #parse($HeaderTemplate)
+
+$Date
+    Inject the actual date and time
+
+$util
+    Inject an utility object. You can use the following functions:
+    example use:
+        $util.camelCase(string)         first letter to lowercase
+        $util.pascalCase(string)        first letter to capitalized
+        $util.toLowerCase(string)       string lowercase
+        $util.toUpperCase(string)       string capitalized
+        $util.objectName(String templateName, String entityName)
+            Return the object name (with package) for the entity and given template
+            where:
+                "templateName" can be: Entity, EntityBase, EntityService, EntityServiceImpl, EntityServiceBaseApi or EntityServiceBaseImpl
+                "entityName": a valid table name (it should be defined in PDEX file)
+            example use:
+                $util.objectName("Entity", "Person")               // this will be: com.cgm.storm.model.Person
+                $util.objectName("EntityService", "Person")        // this will be: com.cgm.storm.PersonService
+
+        $util.getPackage(String templateName, String entityName)
+            Calculates and injects the package for the entity and given template
+
+
+- JAVA LABELS:
+------------
+$Imports           inject the imports according to the class dependencies
+$Package           inject the java-package for the current Entity-FileTemplate
+$DatabaseTable     inject the Entity's Helix Database annotation (table name, primaryKey, indexes)
+

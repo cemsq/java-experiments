@@ -1,0 +1,31 @@
+// Common Labels
+#parse($HeaderTemplate)
+$Entity
+$entity
+#foreach($member in $Members)
+    $member.helixAnnotation
+    private $member.type $member.name;
+
+#end
+utils:
+$util.pascalCase("big")
+$util.camelCase("Small")
+$util.toLowerCase("LOWER")
+$util.toUpperCase("upper")
+
+// Java Labels
+package $Package;
+
+$Imports
+
+/** $Description */
+@DatabaseTable(
+    tableName = "$Entity",
+    primaryKey = @PrimaryKey(name = "$pkName", elementNames = {$pkElements}, strategy = PrimaryKeyGenerator.GENERATED_BY_DB)#if(${Indexes.size()}>0),
+    indexes = {
+#foreach($index in $Indexes)
+        $index
+#end
+    }
+#end
+)

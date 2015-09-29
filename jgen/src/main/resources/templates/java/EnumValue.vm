@@ -1,0 +1,28 @@
+package $Package;
+
+/**
+ * Created by StormJGen
+ *
+ * Please do not modify this file.
+ * @see $util.objectName("EntityEnum", $Entity)
+ */
+
+public enum ${Entity}Enum {
+#foreach($value in $Values)
+#if( $foreach.hasNext )
+    ${value.code}_${value.id} ($value.id),
+#else
+    ${value.code}_${value.id} ($value.id);
+#end
+#end
+
+    private Integer id;
+
+    ${Entity}Enum(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+}

@@ -1,0 +1,81 @@
+package $Package;
+
+import com.cg.helix.mib.annotation.Input;
+
+import com.cg.helix.datasource.Filter;
+import com.cg.helix.datasource.Range;
+import com.cg.helix.datasource.Sort;
+import java.util.List;
+
+$Imports
+
+/**
+ * Created by StormJGen
+ * Please do not modify this file
+ */
+public interface ${Entity}ServiceBaseApi {
+
+    /**
+     * Count all $Entity
+     *
+     * @return number of $Entity
+     */
+    Long getAllCount();
+
+    /**
+     * Counts the $Entity according to the given Filter.
+     *
+     * @param filter A Filter. May be null.
+     * @return The number of $Entity according to the given Filter. Will not return null.
+     */
+    Long filterCount(@Input(name = "filter")Filter filter);
+
+    /**
+     * Get all $Entity
+     *
+     * @return A List of $Entity. Will not return null.
+     */
+    List<$Entity> getAll();
+
+    /**
+     * Finds the $Entity list according to the given parameter.
+     *
+     * @param range A Range. May be null.
+     * @param sort A Sort. May be null
+     * @param filter A Filter. May be null.
+     * @return A List of $Entity according to the given parameter. Will not return null
+     */
+    List<$Entity> find(@Input(name = "range")Range range, @Input(name = "sort")Sort sort, @Input(name = "filter")Filter filter);
+
+    /**
+     * Find the $Entity for the given id.
+     *
+     * @param id The id of the $Entity. Must be neither null nor an empty String.
+     * @return The $Entity. May be return null.
+     */
+    $Entity findById(@Input(name = "id") int id);
+
+    /**
+     * Get the $Entity for the given id.
+     *
+     * @param id The id of the $Entity. Must be neither null nor an empty String.
+     * @return The $Entity. Will not return null. Throws an exception if {@code id} is not found.
+     */
+    $Entity getById(@Input(name = "id") int id);
+
+    /**
+     * Save a $Entity
+     *
+     * @param $entity $Entity to be saved. Must be not null.
+     * @return The saved $Entity. Will not return null.
+     */
+    $Entity save(@Input(name = "$entity") $Entity $entity);
+
+    /**
+     * Delete a $Entity by id
+     *
+     * @param id The id of the $Entity to be deleted. Must be neither null nor an empty String
+     */
+    void delete(@Input(name = "id") int id);
+
+}

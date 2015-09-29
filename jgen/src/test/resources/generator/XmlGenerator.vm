@@ -1,0 +1,18 @@
+// Common ---
+$Entity
+$entity
+#foreach($member in $Members)
+    $member.helixAnnotation
+    private $member.type $member.name;
+
+#end
+utils:
+$util.pascalCase("big")
+$util.camelCase("Small")
+$util.toLowerCase("LOWER")
+$util.toUpperCase("upper")
+
+// Xml - Labels
+$EnumValueName
+$HelixNamespace
+$EnumValueCatalogId

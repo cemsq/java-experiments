@@ -1,0 +1,13 @@
+$Entity
+$entity
+#foreach($member in $Members)
+    $member.helixAnnotation
+    private $member.type $member.name;
+
+#end
+$Description
+#parse($HeaderTemplate)
+$util.pascalCase("big")
+$util.camelCase("Small")
+$util.toLowerCase("LOWER")
+$util.toUpperCase("upper")

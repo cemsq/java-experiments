@@ -1,0 +1,22 @@
+<Database>
+	<Tables>
+		<Table name="StormOrgUnit">
+			<Columns>
+                <Column name="id" type="IN" mandatory="true"/>
+                <Column name="orgUnitId" type="CH" mandatory="true" length="32"/>
+            </Columns>
+            <Index name="PK_STORMORGUNIT" primary="true">
+                <Columns>
+                    <Column name="id"/>
+                </Columns>
+            </Index>
+            <Index name="IX_STORMORGUNIT" primary="false" unique="true">
+                <Columns>
+                    <Column name="orgUnitId"/>
+                </Columns>
+            </Index>
+		</Table>
+	</Tables>
+    <ForeignKeys/>
+	<Domains/>
+</Database>

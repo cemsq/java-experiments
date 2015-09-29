@@ -1,0 +1,14 @@
+## The namespace has to be provided here, otherwise this element is in the empty namespace
+##      and we would have to switch the element and its subelement to the Helix namespace manually
+<BusinessObject xmlns="${HelixNamespace}" name="/com/cgm/storm/model/$EnumValueName">
+    <Columns>id, code, sortSequence</Columns>
+    <Data>
+#foreach($value in $Values)
+#if ($IdIsInteger)
+        <Row>${value.id}, "${value.code}", ${value.sortSequence}</Row>
+#else
+        <Row>"${value.id}", "${value.code}", ${value.sortSequence}</Row>
+#end
+#end
+    </Data>
+</BusinessObject>

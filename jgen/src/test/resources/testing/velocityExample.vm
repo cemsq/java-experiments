@@ -1,0 +1,9 @@
+$Name
+$name
+$Description
+
+${obj.name}-${obj.desc}
+
+#foreach($o in $objects)
+    ${o.name}-${o.desc}
+#end

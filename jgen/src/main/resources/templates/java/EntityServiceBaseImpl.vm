@@ -1,0 +1,122 @@
+package $Package;
+
+import com.cg.helix.context.annotation.Inject;
+import com.cg.helix.datasource.Filter;
+import com.cg.helix.datasource.Range;
+import com.cg.helix.datasource.Sort;
+import com.cg.helix.mib.annotation.Input;
+import com.cg.helix.persistence.PersistenceService;
+import com.cg.helix.persistence.transaction.annotation.Transactional;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.List;
+
+$Imports
+
+/**
+ * Created by StormJGen
+ *
+ * Please do not modify this file
+ *    @see $util.objectName("EntityService", $Entity)
+ *    @see $util.objectName("EntityServiceImpl", $Entity)
+ */
+public class ${Entity}ServiceBaseImpl implements ${Entity}ServiceBaseApi {
+
+    @Inject
+    protected PersistenceService persistenceService;
+
+    public ${Entity}ServiceBaseImpl() {
+
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Long getAllCount() {
+        return persistenceService
+            .select()
+            .from(${Entity}.class)
+            .count();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Long filterCount(@Input(name = "filter")Filter filter) {
+        return persistenceService
+            .select()
+            .from(${Entity}.class)
+            .where(filter)
+            .count();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<$Entity> getAll() {
+        return persistenceService
+            .findAll()
+            .list(${Entity}.class);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<${Entity}> find(@Input(name = "range")Range range, @Input(name = "sort")Sort sort, @Input(name = "filter")Filter filter) {
+        return persistenceService
+            .select()
+            .from(${Entity}.class)
+            .where(filter)
+            .limit(range)
+            .orderBy(sort)
+            .list(${Entity}.class);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public $Entity findById(@Input(name = "id") int id) {
+        checkArgument(id > 0, "${Entity}ServiceBaseImpl.findById: the id of the ${Entity} must be greater than 0");
+
+        $Entity result;
+        result = this.persistenceService
+            .findById(id)
+            .uniqueResult(${Entity}.class);
+
+        return result;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public $Entity getById(@Input(name = "id") int id) {
+        checkArgument(id > 0, "${Entity}ServiceBaseImpl.getById: the id of the ${Entity} must be greater than 0");
+
+        $Entity result;
+        result = this.persistenceService
+            .getById(id)
+            .uniqueResult(${Entity}.class);
+
+        return result;
+    }
+
+    @Transactional
+    @Override
+    public $Entity save(@Input(name = "$entity") $Entity $entity) {
+        checkNotNull($entity, "$entity must be not null");
+
+        persistenceService
+            .saveOrUpdate()
+            .byObject($entity)
+            .execute();
+        return $entity;
+    }
+
+    @Transactional
+    @Override
+    public void delete(@Input(name = "id") int id) {
+        checkArgument(id > 0, "${Entity}ServiceBaseImpl.delete: the id of the $Entity must be greater than 0");
+
+        this.persistenceService
+            .delete()
+            .from(${Entity}.class)
+            .byId(id)
+            .execute();
+    }
+}

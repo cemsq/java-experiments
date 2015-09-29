@@ -1,0 +1,60 @@
+<Database>
+	<Tables>
+		<Table name="DateOfSearch">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" mandatory="true"/>
+				<Column name="dateOfSearch" type="DA" mandatory="true"/>
+			</Columns>
+			<Index name="PK_DATE_OF_SEARCH" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_DATE_OF_SEARCH" unique="true">
+				<Columns>
+					<Column name="dateOfSearch"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SearchHistory">
+			<Comment/>
+			<Columns>
+				<Column name="textId" type="IN" mandatory="true"/>
+				<Column name="dateId" type="IN" mandatory="true"/>
+				<Column name="id" type="IN" mandatory="true"/>
+			</Columns>
+			<Index name="PK_SEARCH_HISTORY" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SearchText">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" mandatory="true"/>
+				<Column name="text" type="CH" length="150" mandatory="true"/>
+			</Columns>
+			<Index name="PK_SEARCH_TEXT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_SEARCH_TEXT" unique="true">
+				<Columns>
+					<Column name="text"/>
+				</Columns>
+			</Index>
+		</Table>
+	</Tables>
+	<ForeignKeys>
+		<ForeignKey name="FK_TEXTDATE_DATE" child="SearchHistory" parent="DateOfSearch" cardinality="many_to_one">
+			<Column src="dateId" target="id"/>
+		</ForeignKey>
+		<ForeignKey name="FK_TEXTDATE_TEXT" child="SearchHistory" parent="SearchText" cardinality="many_to_one">
+			<Column src="textId" target="id"/>
+		</ForeignKey>
+	</ForeignKeys>
+	<Domains/>
+</Database>

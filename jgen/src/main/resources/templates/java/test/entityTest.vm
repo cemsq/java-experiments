@@ -1,0 +1,25 @@
+package $Package;
+
+$Imports
+
+#parse($HeaderTemplate)
+$DatabaseTable
+public class ${Entity} {
+
+#foreach($member in $Members)
+    $member.helixAnnotation
+    private $member.type $member.name;
+
+#end
+
+    #foreach($member in $Members)
+    public $member.type get$util.pascalCase($member.name)() {
+        return $member.name;
+    }
+
+    public void set$util.pascalCase($member.name)($member.type $member.name) {
+        this.$member.name = $member.name;
+    }
+
+    #end
+}
