@@ -18,7 +18,7 @@
         <module>cmd-tool</module>
         <module>chess-game</module>
         <module>text-processor</module>
-        <module>properties</module>
+        <module>utils</module>
     </modules>
 
     <properties>
