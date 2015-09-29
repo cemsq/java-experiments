@@ -1,14 +1,15 @@
-package fieldhandler.handlers;
+package com.cgm.storm.utils.fieldhandler.handlers;
 
-import fieldhandler.FieldHandler;
-import fieldhandler.accessor.FieldAccessor;
+
+import com.cgm.storm.utils.fieldhandler.FieldHandler;
+import com.cgm.storm.utils.fieldhandler.accessor.FieldAccessor;
 
 /**
  *
  */
 public class SimpleFieldHandler implements FieldHandler {
 
-    private FieldAccessor accessor;
+    protected FieldAccessor accessor;
 
     SimpleFieldHandler(FieldAccessor accessor) {
         this.accessor = accessor;
@@ -22,13 +23,5 @@ public class SimpleFieldHandler implements FieldHandler {
     @Override
     public void set(Object obj, Object value) {
         accessor.set(obj, value);
-    }
-
-    public Class getFieldType() {
-        return accessor.getType();
-    }
-
-    public boolean isArray() {
-        return accessor.isArray();
     }
 }

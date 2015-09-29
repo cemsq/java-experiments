@@ -1,7 +1,7 @@
-package fieldhandler.accessor;
+package com.cgm.storm.utils.fieldhandler.accessor;
 
-import fieldhandler.AccessorType;
-import reflection.Reflections;
+import com.cgm.storm.utils.fieldhandler.AccessorType;
+import com.cgm.storm.utils.reflection.Reflections;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,7 +27,7 @@ public abstract class FieldAccessor<T> {
 
     public abstract void set(T obj , Object value);
 
-    public Class getType() {
+    public Class getFieldType() {
         return fieldType;
     }
 
@@ -57,7 +57,7 @@ public abstract class FieldAccessor<T> {
     // ***********************************************
     // * DirectField Accessor
     // ***********************************************
-    static class DirectField<D> extends FieldAccessor<D> {
+    public static class DirectField<D> extends FieldAccessor<D> {
 
         private DirectField(Class<D> clazz, String field) {
             super(clazz, field);
@@ -77,7 +77,7 @@ public abstract class FieldAccessor<T> {
     // ***********************************************
     // * GetterSetter Accessor
     // ***********************************************
-    static class GetterSetter<F> extends FieldAccessor<F> {
+    public static class GetterSetter<F> extends FieldAccessor<F> {
 
         private Method getter;
         private Method setter;
