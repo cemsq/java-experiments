@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
  */
 public class InstanceHolderTest {
 
-    @Test
+    @Test(enabled = false)
     public void test() {
         Movements.king();
         Movements.king();

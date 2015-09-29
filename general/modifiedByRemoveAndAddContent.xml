@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <row>3, text 3</row>
+  <row>4, text 4</row>
+  <row>1, text x ---</row>
+  <row>2, text y ---</row>
+  <row>5, new row # 5</row>
+</root>
