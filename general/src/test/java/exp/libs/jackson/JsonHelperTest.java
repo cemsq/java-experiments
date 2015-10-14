@@ -19,59 +19,74 @@ public class JsonHelperTest {
         build(map, "item.name", "my_analyzer");
         build(map, "item.ingredient.number", "my_analyzer");
 
-        System.out.println(map);
+        System.out.println(JsonHelper.readableJson(map));
     }
 
-    @SuppressWarnings("unchecked")
+
     private void build(Map<String, Object> map, String fieldName, String analyzer) {
         String[] tokens = parseFieldName(fieldName);
 
         String name = tokens[0];
         String nested = tokens[1];
 
-        Map<String, Object> properties = (Map<String, Object>)map.get(name);
+        // get or create an object with name "name"
+        Map<String, Object> properties = get(map, name);
 
-        if (properties == null) {
-            properties = new HashMap<>();
-            map.put(name, properties);
-        }
-
+        // looking for a terminal object
         if (Strings.isNullOrEmpty(nested)) {
+            properties.put("type", "string");
             properties.put("analyzer", analyzer);
 
         } else {
-            Map<String, Object> fields = (Map<String, Object>)properties.get("properties");
-            if (fields == null) {
-                fields = new HashMap<>();
-                properties.put("properties", fields);
-            }
+            // get or create a "properties" object
+            Map<String, Object> fields = get(properties, "properties");
 
+            // looking for a nested object
             build(fields, nested, analyzer);
         }
     }
 
-    private static String[] parseFieldName(String fieldName) {
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> get(Map<String, Object> map, String name) {
+        Map<String, Object> obj = (Map<String, Object>)map.get(name);
+        if (obj == null) {
+            obj = new HashMap<>();
+            map.put(name, obj);
+        }
+
+        return obj;
+    }
+
+    /**
+     * fieldName = "some.field.name"
+     *  returns:
+     *      [0] = "some"
+     *      [1] = "field.name"
+     */
+    private String[] parseFieldName(String fieldName) {
         checkFieldName(fieldName);
 
         String field = fieldName;
-        int point = fieldName.indexOf(".");
+        String nested = "";
 
+        int point = fieldName.indexOf(".");
         if (point > 0) {
             field = fieldName.substring(0, point);
-            fieldName = fieldName.substring(point + 1);
-        } else {
-            fieldName = "";
+            nested = fieldName.substring(point + 1);
         }
 
         return new String[]{
                 field,
-                fieldName
+                nested
         };
     }
 
-    private static void checkFieldName(String fieldName) {
+    private void checkFieldName(String fieldName) {
         if (Strings.isNullOrEmpty(fieldName)) {
             throw new RuntimeException("Empty fieldName");
+        }
+        if (fieldName.startsWith(".")) {
+            throw new RuntimeException("fieldName should not start with dot");
         }
         if (fieldName.endsWith(".")) {
             throw new RuntimeException("fieldName should not end with dot");
