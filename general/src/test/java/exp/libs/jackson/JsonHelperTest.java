@@ -3,9 +3,7 @@ package exp.libs.jackson;
 import com.google.common.base.Strings;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,12 +19,12 @@ public class JsonHelperTest {
         build(map, "item.name", "my_analyzer");
         build(map, "item.ingredient.number", "my_analyzer");
 
-        System.out.println(JsonHelper.readableJson(map));
+        System.out.println(map);
     }
 
-
-    private void build(Map<String, Object> map, String fields, String analyzer) {
-        String[] tokens = parseFieldName(fields);
+    @SuppressWarnings("unchecked")
+    private void build(Map<String, Object> map, String fieldName, String analyzer) {
+        String[] tokens = parseFieldName(fieldName);
 
         String name = tokens[0];
         String nested = tokens[1];
@@ -40,19 +38,19 @@ public class JsonHelperTest {
 
         if (Strings.isNullOrEmpty(nested)) {
             properties.put("analyzer", analyzer);
+
         } else {
-            Map<String, Object> propers = (Map<String, Object>)properties.get("properties");
-            if (propers == null) {
-                propers = new HashMap<>();
-                properties.put("properties", propers);
+            Map<String, Object> fields = (Map<String, Object>)properties.get("properties");
+            if (fields == null) {
+                fields = new HashMap<>();
+                properties.put("properties", fields);
             }
 
-            build(propers, nested, analyzer);
+            build(fields, nested, analyzer);
         }
     }
 
-
-    public static String[] parseFieldName(String fieldName) {
+    private static String[] parseFieldName(String fieldName) {
         checkFieldName(fieldName);
 
         String field = fieldName;
