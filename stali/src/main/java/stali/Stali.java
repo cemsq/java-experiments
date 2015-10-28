@@ -353,45 +353,37 @@ public class Stali extends javax.swing.JFrame {
         StringBuilder dataDest = new StringBuilder("");
 
         String randoms[] = randomValues.getText().split(" ");
-//        if (randoms.length == 1) {
-//            int perDay = Integer.valueOf(randoms[0]);
-//            int maxTexts = Integer.valueOf(randoms[1]);;
-//            int maxDates = Integer.valueOf(randoms[2]);;
-//
-//            for (int day = 1; day <= maxDates; day++){
-//                for (int search = 1; search <= perDay; search++) {
-//                    int textId = random(1, maxTexts);
-//                    dataDest.append(day);
-//                    dataDest.append("\t");
-//                    dataDest.append(textId);
-//                    dataDest.append("\n");
-//                }
-//            }
-//        }
-        if (randoms.length == 3) {
 
-//            LocalDate from = LocalDate.parse("2015-01-01");
-//            LocalDate to = LocalDate.parse("2015-12-31");
-//            for (LocalDate date = from; date.isBefore(to); date = date.plusDays(1)) {
-//                dataDest.append(date);
-//                dataDest.append("\n");
-//            }
+        if (randoms.length == 4) {
+            int numberOfCats = Integer.valueOf(randoms[0]);
+            int numberOfTexts = Integer.valueOf(randoms[1]);
+            int numberOfDays = Integer.valueOf(randoms[2]);
+            int maxPerDay = Integer.valueOf(randoms[3]);
 
-            int numberOfTexts = Integer.valueOf(randoms[0]);
-            int numberOfDays = Integer.valueOf(randoms[1]);
-            int maxPerDay = Integer.valueOf(randoms[2]);
-            for (int day = 1; day <= numberOfDays; day++) {
-                for (int textId = 1; textId <= numberOfTexts; textId++) {
-                    dataDest.append(day);
-                    dataDest.append("\t");
-                    dataDest.append(textId);
-                    dataDest.append("\t");
-                    dataDest.append(random(0, maxPerDay));
-                    dataDest.append("\n");
+            LocalDate from = LocalDate.now().minusDays(numberOfDays);
+
+            for (int d = 0; d <= numberOfDays; d++) {
+                LocalDate date = from.plusDays(d);
+
+                for (int c = 1; c <= numberOfCats; c++) {
+                    for (int t = 1; t <= numberOfTexts; t++) {
+                        dataDest.append(c);
+                        dataDest.append("\t");
+                        dataDest.append(t);
+                        dataDest.append("\t");
+                        dataDest.append(date);
+                        dataDest.append("\t");
+                        dataDest.append(random(0, maxPerDay));
+                        dataDest.append("\n");
+                    }
                 }
             }
         } else {
-            dataDest.append("wrong parameters in random TextBox. int and date expected");
+            dataDest.append("wrong parameters in random TextBox. " +
+                    "int = number of category, " +
+                    "int = number of text, " +
+                    "int = number of days, " +
+                    "int = text per day");
         }
 
         textFinal.setText(dataDest.toString());

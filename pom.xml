@@ -19,6 +19,7 @@
         <module>chess-game</module>
         <module>text-processor</module>
         <module>utils</module>
+		<module>jgen</module>
     </modules>
 
     <properties>
@@ -27,12 +28,19 @@
     </properties>
 
     <dependencies>
-        <!-- JSON -->
+        <!-- JSON - Jackson-->
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20141113</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.1.3</version>
         </dependency>
+
+        <!-- JSON - Jackson-->
+        <!--<dependency>-->
+            <!--<groupId>org.json</groupId>-->
+            <!--<artifactId>json</artifactId>-->
+            <!--<version>20141113</version>-->
+        <!--</dependency>-->
 
 
         <!-- XML -->
