@@ -1,31 +1,34 @@
 package exp.libs;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
  *
  */
 public class BooleanTest {
-    @Test
-    public void convertingStringToBoolean_shouldBe_true() {
-        boolean true1 = Boolean.valueOf("true");
-        boolean true2 = Boolean.valueOf("True");
-        boolean true3 = Boolean.valueOf("tRUe");
 
-        Assert.assertEquals(true1, true);
-        Assert.assertEquals(true2, true);
-        Assert.assertEquals(true3, true);
+    @DataProvider
+    public Object[][] provider() {
+        return new Object[][] {
+                {"true", true},
+                {"True", true},
+                {"tRUe", true},
+
+                {"false", false},
+                {"False", false},
+                {"asdf", false},
+                {null, false},
+                {"", false},
+        };
     }
 
-    @Test
-    public void convertingStringToBoolean_shouldBe_false() {
-        boolean false1 = Boolean.valueOf("False");
-        boolean false2 = Boolean.valueOf("");
-        boolean false3 = Boolean.valueOf(null);
+    @Test(dataProvider = "provider")
+    public void convertingStringToBoolean(String value, boolean expected) {
+        boolean result = Boolean.valueOf(value);
 
-        Assert.assertEquals(false1, false);
-        Assert.assertEquals(false2, false);
-        Assert.assertEquals(false3, false);
+        Assert.assertEquals(result, expected,
+                "error testing [value: '" + value + "']. [expected: '"+expected+"']");
     }
 }
