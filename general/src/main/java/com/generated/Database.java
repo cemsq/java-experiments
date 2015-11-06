@@ -6,7 +6,7 @@
 //
 
 
-package com.cg.jgen.generated;
+package com.generated;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

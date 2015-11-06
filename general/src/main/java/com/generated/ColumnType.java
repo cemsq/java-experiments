@@ -6,7 +6,7 @@
 //
 
 
-package com.cg.jgen.generated;
+package com.generated;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
