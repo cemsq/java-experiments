@@ -1,4 +1,4 @@
-package exp.libs.jackson;
+package com.libs.jackson;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

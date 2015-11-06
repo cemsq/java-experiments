@@ -1,4 +1,4 @@
-package exp.libs;
+package com.libs;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

@@ -1,4 +1,4 @@
-package exp.libs;
+package com.libs;
 
 import exp.amodel.Person;
 import org.testng.Assert;
