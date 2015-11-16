@@ -1,0 +1,1138 @@
+<Database>
+	<Tables>
+		<Table name="Acceptance" isValueTable="true">
+			<Comment>Value table for accepted/rejected in requisitionSignature</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_ACCEPTANCE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="rejected" displayText="rejected" sortSequence="1"/>
+				<Value id="1" code="accepted" displayText="accepted" sortSequence="2"/>
+			</Values>
+		</Table>
+		<Table name="Agent" isValueTable="true">
+			<Comment>value table Agent
+The list of values for different types of ingredients</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_AGENT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="undefined" sortSequence="1"/>
+				<Value id="1" code="agent" displayText="agent" sortSequence="2"/>
+				<Value id="2" code="consistsOf" displayText="consists of" sortSequence="3"/>
+				<Value id="3" code="nonAgent" displayText="non agent" sortSequence="4"/>
+			</Values>
+		</Table>
+		<Table name="Assortment">
+			<Comment>range of goods</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="providerId" type="IN" domain="ProviderId" mandatory="true"/>
+				<Column name="importedId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="requisitionModeId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ASSORTMENT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="AssortmentRelation">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="subsetId" type="IN" domain="StormId"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ASSORTMENTRELATION" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="AuditDefinition">
+			<Comment>Defines all tables were changes will be tracked</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="auditObjectName" type="CH" length="30" mandatory="true"/>
+				<Column name="fieldName" type="CH" length="50"/>
+				<Column name="isActive" type="IN" mandatory="true"/>
+				<Column name="activeFrom" type="DA"/>
+				<Column name="activeUntil" type="DA"/>
+				<Column name="isActiveChangeable" type="IN" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn"/>
+				<Column name="createdBy" type="CH" length="30"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="version" type="IN" domain="Version" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_AUDITDEFINITION" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_OBJECTFIELD" unique="true">
+				<Columns>
+					<Column name="auditObjectName"/>
+					<Column name="fieldName"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="AutIdem" isValueTable="true">
+			<Comment>disallow substitution of a medicine with another one containing the same agent, or allow</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_AUTIDEM" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="Not defined" sortSequence="1"/>
+				<Value id="1" code="no" displayText="No" sortSequence="2"/>
+				<Value id="2" code="yes" displayText="Yes" sortSequence="3"/>
+			</Values>
+		</Table>
+		<Table name="Imported" isValueTable="true">
+			<Comment>Value for giving a sign when an assortment is imported from an external system</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_IMPORTED" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="Not defined" sortSequence="1"/>
+				<Value id="1" code="no" displayText="No" sortSequence="2"/>
+				<Value id="2" code="yes" displayText="Yes" sortSequence="3"/>
+			</Values>
+		</Table>
+		<Table name="Ingredient">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="providerId" type="IN" domain="ProviderId"/>
+				<Column name="externalId" type="CH" length="50"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_INGREDIENT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="Item">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="code" type="CH" length="100" mandatory="true"/>
+				<Column name="description" type="CH" domain="Name" length="100"/>
+				<Column name="longDescription" type="CH" length="255"/>
+				<Column name="additionalDescription" type="CH" domain="Name" length="100"/>
+				<Column name="longName" type="CH" length="255"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence"/>
+				<Column name="itemNumber" type="CH" domain="ItemNumber" length="50" mandatory="true"/>
+				<Column name="externalItemNumber" type="CH" domain="ItemNumber" length="50" mandatory="true"/>
+				<Column name="baseUnitId" type="IN" domain="StormId"/>
+				<Column name="prescriptionRequirementId" type="IN" domain="EnumId" mandatory="true" defaultValue="2"/>
+				<Column name="narcoticId" type="IN" domain="EnumId" mandatory="true" defaultValue="2"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEM" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemDescription">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="providerItemId" type="IN" domain="StormId"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32"/>
+				<Column name="code" type="CH" length="100" mandatory="true"/>
+				<Column name="description" type="CH" domain="Name" length="100" mandatory="true"/>
+				<Column name="itemNumber" type="CH" domain="ItemNumber" length="50" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMDESCRIPTION" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemGroup">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="groupKey" type="CH" length="80" mandatory="true"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="itemGroupTypeId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMGROUP" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemGroupItem">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemGroupId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMGROUPITEM" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemGroupRelation">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemGroupTypeId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMGROUPRELATION" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemGroupType">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMGROUPTYPE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemIdentification">
+			<Comment>Identification data for an item (external numbers, barcode data)</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemUnitId" type="IN" domain="StormId"/>
+				<Column name="itemIdentTypeId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="identification" type="CH" domain="Name" length="100" mandatory="true"/>
+				<Column name="supplierId" type="IN" domain="StormId"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMIDENTIFICATION" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemIdentType" isValueTable="true">
+			<Comment>type of item identification number
+(GTIN, PZN, HIBC,....)</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_ITEMIDENTTYPE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="undefined" sortSequence="1"/>
+				<Value id="1" code="PZN" displayText="PZN" sortSequence="2"/>
+				<Value id="2" code="GTIN" displayText="GTIN" sortSequence="3"/>
+				<Value id="3" code="HIBC" displayText="HIBC" sortSequence="4"/>
+				<Value id="4" code="supplierItemNumber" displayText="supplier item number" sortSequence="5"/>
+				<Value id="5" code="externalID" displayText="external ID" sortSequence="6"/>
+			</Values>
+		</Table>
+		<Table name="ItemIngredient">
+			<Comment>Deliverer item information</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId"/>
+				<Column name="ingredientId" type="IN" domain="StormId"/>
+				<Column name="quantity" type="FX"/>
+				<Column name="unit" type="CH" domain="Code" length="50"/>
+				<Column name="agentId" type="IN" domain="EnumId" mandatory="true" defaultValue="0"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMINGREDIENT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_ITEMINGREDIENT_IDX2" unique="true">
+				<Columns>
+					<Column name="ingredientId"/>
+					<Column name="itemId"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemPrice">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="providerItemId" type="IN" domain="StormId"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32"/>
+				<Column name="netPriceBU" type="FX"/>
+				<Column name="grossPriceBU" type="FX"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMPRICE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemStatus">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="externalId" type="CH" length="50"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32"/>
+				<Column name="itemStatusTypeId" type="IN" domain="EnumId" mandatory="true" defaultValue="0"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMSTATUS" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemStatusType" isValueTable="true">
+			<Comment>list of status types for items: stock item, non-stock item, ...</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_ITEMSTATUSTYPE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="undefined" sortSequence="1"/>
+				<Value id="1" code="stockItem" displayText="stock item" sortSequence="2"/>
+				<Value id="2" code="nonStockItem" displayText="non-stock item" sortSequence="3"/>
+			</Values>
+		</Table>
+		<Table name="ItemText">
+			<Comment>various texts belonging to an item</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="providerItemId" type="IN" domain="StormId"/>
+				<Column name="textShelfId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemTextTypeId" type="IN" domain="EnumId" mandatory="true" defaultValue="0"/>
+				<Column name="validFrom" type="TS"/>
+				<Column name="validTo" type="TS"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMTEXT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_PROVIDERITEM_IDX3" unique="true">
+				<Columns>
+					<Column name="textShelfId"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ItemTextType" isValueTable="true">
+			<Comment>text types for an item: general text, dosing hint, patient information leaflet, requisition text</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_ITEMTEXTTYPE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="generalText" displayText="general text" sortSequence="1"/>
+				<Value id="1" code="patientInformationLeaflet" displayText="patient information leaflet" sortSequence="2"/>
+				<Value id="2" code="dosingHint" displayText="dosing hint" sortSequence="3"/>
+				<Value id="4" code="requisitionText" displayText="requisition text" sortSequence="4"/>
+			</Values>
+		</Table>
+		<Table name="ItemUnit">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="unitId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="factor" type="FX" domain="Factor" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ITEMUNIT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="Manufacturer">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="nr" type="CH" length="50"/>
+				<Column name="externalId" type="CH" length="50"/>
+				<Column name="providerId" type="IN" domain="ProviderId"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_MANUFACTURER" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="ManufacturerItem">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="manufacturerId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="note" type="CH" domain="Note" length="200"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_MANUFACTURERITEM" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="Narcotic" isValueTable="true">
+			<Comment>list of values for narcotic: yes, no</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_NARCOTIC" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="Not defined" sortSequence="1"/>
+				<Value id="1" code="yes" displayText="Yes" sortSequence="2"/>
+				<Value id="2" code="no" displayText="No" sortSequence="3"/>
+			</Values>
+		</Table>
+		<Table name="OrgUnitExtension" deleteLogical="true">
+			<Comment>A Wrapper Class/Table for Bas_OrgUnit</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_ORGUNIT_EXT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_ORGUNIT_EXT" unique="true">
+				<Columns>
+					<Column name="orgUnitId"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="PrescriptionRequirement" isValueTable="true">
+			<Comment>List of Values for Prescription Requirement</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_PRESCRIPTIONREQUIREMENT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="Not defined" sortSequence="1"/>
+				<Value id="1" code="yes" displayText="Yes" sortSequence="2"/>
+				<Value id="2" code="no" displayText="No" sortSequence="3"/>
+			</Values>
+		</Table>
+		<Table name="ProviderItem">
+			<Comment>Provider item information</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="providerId" type="IN" domain="ProviderId" mandatory="true"/>
+				<Column name="requisitionUnitId" type="IN" domain="StormId"/>
+				<Column name="itemStatusId" type="IN" domain="StormId"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_PROVIDERITEM" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_PROVIDERITEM_IDX2" unique="true">
+				<Columns>
+					<Column name="providerId"/>
+					<Column name="itemId"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="Requisition">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="providerId" type="IN" domain="ProviderId" mandatory="true"/>
+				<Column name="documentNumber" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="documentDate" type="TS"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32"/>
+				<Column name="requisitionTypeId" type="IN" domain="EnumId" mandatory="true" defaultValue="0"/>
+				<Column name="requisitionStateId" type="IN" domain="EnumId" mandatory="true" defaultValue="0"/>
+				<Column name="sentOn" type="TS"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_REQUISITION" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="RequisitionBasket">
+			<Comment>Shopping Basket for Requisitions
+all item requisitions will be collected here
+after signing they will move to the requisition</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="providerId" type="IN" domain="ProviderId" mandatory="true"/>
+				<Column name="orgUnitId" type="CH" domain="BasId" length="32" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId"/>
+				<Column name="specialRequisitionText" type="CH" length="200"/>
+				<Column name="quantity" type="IN" domain="Quantity"/>
+				<Column name="alternateItemUnitId" type="IN" domain="StormId"/>
+				<Column name="caseNumber" type="CH" domain="Case" length="40"/>
+				<Column name="autIdemId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="externalIdentification" type="CH" domain="Name" length="100"/>
+				<Column name="externalIdentTypeId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="externalItemClass" type="CH" length="20"/>
+				<Column name="externalItemPrice" type="FX" domain="Price"/>
+				<Column name="externalTaxKey" type="CH" length="10"/>
+				<Column name="additionalInformation" type="CH" length="400"/>
+				<Column name="requisitionTypeId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_REQUISITIONBASKET" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="RequisitionMode" isValueTable="true">
+			<Comment>Value for giving a sign when an assortment is imported from an external system</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_REQUISITIONMODE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="Not defined" sortSequence="1"/>
+				<Value id="1" code="none" displayText="None" sortSequence="2"/>
+				<Value id="2" code="include" displayText="Include" sortSequence="3"/>
+				<Value id="3" code="exclude" displayText="Exclude" sortSequence="4"/>
+			</Values>
+		</Table>
+		<Table name="RequisitionPosition">
+			<Comment>Item List for signed Requisitions</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="requisitionId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="position" type="IN"/>
+				<Column name="itemId" type="IN" domain="StormId"/>
+				<Column name="specialRequisitionText" type="CH" length="200"/>
+				<Column name="quantity" type="IN" domain="Quantity"/>
+				<Column name="alternateItemUnitId" type="IN" domain="StormId"/>
+				<Column name="caseNumber" type="CH" domain="Case" length="40"/>
+				<Column name="autIdemId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="externalIdentification" type="CH" domain="Name" length="100"/>
+				<Column name="externalIdentTypeId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="externalItemClassification" type="CH" length="20"/>
+				<Column name="externalItemPrice" type="FX" domain="Price"/>
+				<Column name="externalTaxKey" type="CH" length="10"/>
+				<Column name="additionalInformation" type="CH" length="400"/>
+				<Column name="state" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_REQUISITIONPOSITION" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="RequisitionSignature">
+			<Comment>signature list for a requisition.
+in a workflow there are steps for accepting a requisition - this steps will be documented here</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="requisitionId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="signatureLevel" type="IN"/>
+				<Column name="signedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="signedOn" type="TS"/>
+				<Column name="acceptanceId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_REQUISITIONSIGNATURE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="RequisitionState" isValueTable="true">
+			<Comment>list of states of a requisition: entered, rejected, signed, completed, ...</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_REQUISITIONSTATE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="entered" displayText="entered" sortSequence="1"/>
+				<Value id="1" code="waiting" displayText="waiting for acceptance" sortSequence="2"/>
+				<Value id="2" code="rejected" displayText="rejected" sortSequence="3"/>
+				<Value id="3" code="signed" displayText="signed" sortSequence="4"/>
+				<Value id="4" code="transferred" displayText="transferred" sortSequence="5"/>
+				<Value id="5" code="inProcess" displayText="in process" sortSequence="6"/>
+				<Value id="6" code="completed" displayText="completed" sortSequence="7"/>
+			</Values>
+		</Table>
+		<Table name="RequisitionType" isValueTable="true">
+			<Comment>different types of requisitions (standard, express,...)</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_REQUISITIONTYPE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="Not defined" sortSequence="1"/>
+				<Value id="1" code="standard" displayText="standard" sortSequence="2"/>
+				<Value id="2" code="express" displayText="express" sortSequence="3"/>
+			</Values>
+		</Table>
+		<Table name="SearchCategory">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SEARCHCATEGORY" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_SEARCHCATEGORY" unique="true">
+				<Columns>
+					<Column name="name"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SearchCategoryField">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="categoryId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="fieldId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SEARCHCATEGORYFIELD" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_SEARCHCATEGORYFIELD" unique="true">
+				<Columns>
+					<Column name="categoryId"/>
+					<Column name="fieldId"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SearchField">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100" mandatory="true"/>
+				<Column name="esType" type="CH" length="15" mandatory="true"/>
+				<Column name="analyzer" type="CH" length="25" mandatory="true"/>
+				<Column name="indexed" type="IN" mandatory="true"/>
+				<Column name="businessObject" type="CH" length="50" mandatory="true"/>
+				<Column name="businessField" type="IN" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SEARCHFIELD" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_SEARCHFIELD" unique="true">
+				<Columns>
+					<Column name="name"/>
+					<Column name="businessObject"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SearchHistory">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="textId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="categoryId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="dateOfSearch" type="DA" mandatory="true"/>
+				<Column name="quantity" type="IN" domain="Quantity" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SEARCHHISTORY" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_SEARCHHISTORY" unique="true">
+				<Columns>
+					<Column name="textId"/>
+					<Column name="dateOfSearch"/>
+					<Column name="categoryId"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SearchText">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="text" type="CH" length="100" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SEARCHTEXT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Index name="IX_SEARCHTEXT" unique="true">
+				<Columns>
+					<Column name="text"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="Subset">
+			<Comment>subset of items</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="assortmentId" type="IN" domain="StormId"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SUBSET" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SubsetItem">
+			<Comment>range of goods</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="subsetId" type="IN" domain="StormId"/>
+				<Column name="itemId" type="IN" domain="StormId"/>
+				<Column name="quantity" type="IN" domain="Quantity"/>
+				<Column name="itemUnitId" type="IN" domain="StormId"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SUBSETITEM" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="Supplier">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="nr" type="CH" length="50"/>
+				<Column name="externalId" type="CH" length="50"/>
+				<Column name="providerId" type="IN" domain="ProviderId"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SUPPLIER" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="SupplierItem">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="supplierId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="itemUnitId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="supplierItemDescription" type="CH" domain="Name" length="100"/>
+				<Column name="additionalItemNumber" type="CH" length="100"/>
+				<Column name="listPrice" type="FX"/>
+				<Column name="note" type="CH" domain="Note" length="200"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_SUPPLIERITEM" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="Text">
+			<Comment>single text snippet up to 1900 characters</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="textShelfId" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence"/>
+				<Column name="text" type="CH" length="1900"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_TEXT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="TextShelf">
+			<Comment>shelf for all texts needed</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="textTypeId" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_TEXTSHELF" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+		<Table name="TextType" isValueTable="true">
+			<Comment>text type: plain text, undefined</Comment>
+			<Columns>
+				<Column name="id" type="IN" domain="EnumId" mandatory="true"/>
+				<Column name="code" type="CH" domain="CodeValueTable" length="32" mandatory="true"/>
+				<Column name="sortSequence" type="IN" domain="SortSequence" mandatory="true"/>
+			</Columns>
+			<Index name="PK_TEXTTYPE" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+			<Values>
+				<Value id="0" code="undefined" displayText="Not defined" sortSequence="1"/>
+				<Value id="1" code="plainText" displayText="plain text" sortSequence="2"/>
+			</Values>
+		</Table>
+		<Table name="Unit">
+			<Comment/>
+			<Columns>
+				<Column name="id" type="IN" domain="StormId" mandatory="true"/>
+				<Column name="externalId" type="CH" length="50"/>
+				<Column name="providerId" type="IN" domain="ProviderId"/>
+				<Column name="code" type="CH" domain="Code" length="50" mandatory="true"/>
+				<Column name="name" type="CH" domain="Name" length="100"/>
+				<Column name="createdOn" type="TS" domain="CreatedOn" mandatory="true"/>
+				<Column name="createdBy" type="CH" domain="AuthUserId" length="18" mandatory="true"/>
+				<Column name="lastModifiedOn" type="TS" domain="LastModifiedOn"/>
+				<Column name="lastModifiedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="deleted" type="IN" domain="Deleted" mandatory="true" defaultValue="0"/>
+				<Column name="deletedOn" type="TS" domain="DeletedOn"/>
+				<Column name="deletedBy" type="CH" domain="AuthUserId" length="18"/>
+				<Column name="version" type="IN" domain="Version" mandatory="true" defaultValue="0"/>
+			</Columns>
+			<Index name="PK_UNIT" primary="true">
+				<Columns>
+					<Column name="id"/>
+				</Columns>
+			</Index>
+		</Table>
+	</Tables>
+	<ForeignKeys/>
+	<Domains>
+		<Domain name="AuthUserId"/>
+		<Domain name="BasId"/>
+		<Domain name="Case"/>
+		<Domain name="Code"/>
+		<Domain name="CodeValueTable"/>
+		<Domain name="CreatedOn"/>
+		<Domain name="Deleted"/>
+		<Domain name="DeletedOn"/>
+		<Domain name="EnumId"/>
+		<Domain name="Factor"/>
+		<Domain name="FkId"/>
+		<Domain name="HelixId"/>
+		<Domain name="ItemNumber"/>
+		<Domain name="LastModifiedOn"/>
+		<Domain name="Name"/>
+		<Domain name="Note"/>
+		<Domain name="Price"/>
+		<Domain name="ProviderId"/>
+		<Domain name="Quantity"/>
+		<Domain name="SortSequence"/>
+		<Domain name="StormId"/>
+		<Domain name="Version"/>
+	</Domains>
+</Database>

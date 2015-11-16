@@ -1,4 +1,4 @@
-package exp.libs.jackson;
+package com.libs.jackson;
 
 import com.google.common.base.Strings;
 import org.testng.annotations.Test;
