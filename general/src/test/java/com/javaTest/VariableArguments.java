@@ -3,6 +3,11 @@ package com.javaTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  */
@@ -37,16 +42,12 @@ public class VariableArguments {
     @Test
     public void confusingPrimitiveArrayArgumentToObject() {
         int []array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        // unexpected result
+
+        // java assume "array" as a unique object
         String str = getStringFromObjects(array);
 
-        try {
-            // unexpected result
-            Assert.assertEquals(str, "1 2 3 4 5 6 7 8 9");
-        } catch (AssertionError e) {
-            System.out.println();
-            e.printStackTrace();
-        }
+        // should fail
+        Assert.assertEquals(str, "1 2 3 4 5 6 7 8 9");
     }
 
     @Test
@@ -63,16 +64,16 @@ public class VariableArguments {
         Name []namesA = {new Name("Napoleon"), new Name("Neron")};
         Name []namesB = {new Name("Dario"), new Name("Carlos")};
 
+        // it will take/assume 2 arguments: namesA, namesB
+        // it is an unexpected result
         String str = getStringFromObjects(namesA, namesB);
-        try {
-            Assert.assertEquals(str, "Napoleon Neron Dario Carlos");
-        }catch (AssertionError e) {
-            e.printStackTrace();
-        }
+
+        Assert.assertEquals(str, "Napoleon Neron Dario Carlos");
+
     }
 
     @Test
-    public void usingArraysAsArguments() {
+    public void takingElementsFromAnArrays() {
         Name []namesA = {new Name("Josef"), new Name("Norbert")};
         Name []namesB = {new Name("Dennis"), new Name("Florian")};
 
@@ -80,6 +81,28 @@ public class VariableArguments {
         System.out.println("printing: " + str);
 
         Assert.assertEquals(str, "Josef Norbert Dennis Florian Cesar");
+    }
+
+    @Test
+    public void takingElementsFromAnArrayList() {
+        List<Name> list = Arrays.asList(new Name("Josef")
+                , new Name("Norbert")
+                , new Name("Dennis"));
+
+        Name []namesB = {new Name("Florian"), new Name("Cesar")};
+
+        String str = getStringFromDeepObjects(list, namesB);
+        System.out.println("printing: " + str);
+
+        Assert.assertEquals(str, "Josef Norbert Dennis Florian Cesar");
+    }
+
+    @Test
+    public void gettingListFromArgs() {
+        List<Name> list = (List<Name>)asList(new Name("Cesar"), Arrays.asList(new Name("Dario"), new Name("Mora")), new Name("Mariya"));
+
+        String str = getStringFromDeepObjects(list);
+        Assert.assertEquals(str, "Cesar Dario Mora Mariya");
     }
 
     public String getStringFromInt(int ...args) {
@@ -113,7 +136,7 @@ public class VariableArguments {
         return sb.toString();
     }
 
-    public String getStringFromDeepObjects(Object... args) {
+    public static String getStringFromDeepObjects(Object... args) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
 
@@ -125,6 +148,9 @@ public class VariableArguments {
 
             if (isArray(arg)) {
                 sb.append(getStringFromDeepObjects((Object[]) arg));
+            } else if (isList(arg)) {
+
+                sb.append(getStringFromDeepObjects(((List) arg).toArray()));
             } else {
                 sb.append(arg);
             }
@@ -133,8 +159,33 @@ public class VariableArguments {
         return sb.toString();
     }
 
+    @Test
+    public List asList(Object ...args) {
+        List list = new ArrayList<>();
 
-    public boolean isArray(Object obj) {
+        for (Object arg : args) {
+            List returned;
+            if (isArray(arg)) {
+                returned = asList((Object[])arg);
+
+            } else if (isList(arg)) {
+                returned = asList(((List)arg).toArray());
+
+            } else {
+                returned = Collections.singletonList(arg);
+            }
+
+            list.addAll(returned);
+        }
+
+        return list;
+    }
+
+    public static boolean isArray(Object obj) {
         return obj.getClass().isArray();
+    }
+
+    public static boolean isList(Object obj) {
+        return obj instanceof List;
     }
 }

@@ -32,4 +32,5 @@ public class MapTest {
 
         Assert.assertEquals(map.size(), 1);
     }
+
 }
