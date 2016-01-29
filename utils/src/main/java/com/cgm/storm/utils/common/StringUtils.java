@@ -14,9 +14,16 @@ public class StringUtils {
     private StringUtils() {}
 
     public static String capitalize(String str) {
-
         if (!Strings.isNullOrEmpty(str)) {
             str = str.substring(0, 1).toUpperCase() + str.substring(1);
+        }
+
+        return str;
+    }
+
+    public static String camelCase(String str) {
+        if (!Strings.isNullOrEmpty(str)) {
+            str = str.substring(0, 1).toLowerCase() + str.substring(1);
         }
 
         return str;

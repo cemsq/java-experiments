@@ -1,0 +1,40 @@
+<TypeNameDictionary>
+    <Word PDexValue = "name"
+          JGenValue = "name"/>
+
+    <Word PDexValue = "type"
+          JGenValue = "type"/>
+
+    <Word PDexValue = "varchar"
+          JGenValue = "String"/>
+
+    <Word PDexValue = "ch"
+          JGenValue = "String"/>
+
+    <Word PDexValue = "vc"
+          JGenValue = "String"/>
+
+    <Word PDexValue = "string"
+          JGenValue = "String"/>
+
+    <Word PDexValue = "fx"
+          JGenValue = "Float"/>
+
+    <Word PDexValue = "integer"
+          JGenValue = "Integer"/>
+
+    <Word PDexValue = "IN"
+          JGenValue = "Integer" />
+
+    <Word PDexValue = "yes"
+          JGenValue = "true" />
+
+    <Word PDexValue = "no"
+          JGenValue = "false" />
+
+    <Word PDexValue = "TS"
+          JGenValue = "LocalDateTime"/>
+
+    <Word PDexValue = "DA"
+          JGenValue = "LocalDate"/>
+</TypeNameDictionary>
