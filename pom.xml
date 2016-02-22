@@ -23,6 +23,7 @@
         <module>jgen2</module>
         <module>usaco</module>
         <module>convex</module>
+        <module>working-time</module>
     </modules>
 
     <properties>
