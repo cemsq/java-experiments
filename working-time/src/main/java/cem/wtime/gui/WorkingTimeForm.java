@@ -155,8 +155,7 @@ public class WorkingTimeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_textFromActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String value = solver.solve();
-        textWorked.setText(value);
+        solver.solve();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void textFromFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFromFocusLost

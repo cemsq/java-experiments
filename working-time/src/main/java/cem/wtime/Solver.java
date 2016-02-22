@@ -1,7 +1,6 @@
 package cem.wtime;
 
 import org.joda.time.LocalTime;
-import org.mockito.cglib.core.Local;
 
 import javax.swing.*;
 
@@ -19,23 +18,28 @@ public class Solver {
         this.worked = worked;
     }
 
-    public String solve() {
+    public void solve() {
         WorkingTime from = createWorkingTime(this.from);
         WorkingTime to = createWorkingTime(this.to);
         WorkingTime pause = createWorkingTime(this.pause);
 
-        return to.minus(from).minus(pause).toString();
+        String worked = to.minus(from).minus(pause).toString();
+
+        this.worked.setText(worked);
     }
 
     private WorkingTime createWorkingTime(JTextField textField) {
+        LocalTime time;
         try {
             filter(textField);
-            return new WorkingTime(LocalTime.parse(textField.getText()));
+            time = LocalTime.parse(textField.getText());
 
         } catch (IllegalArgumentException  e) {
             textField.setText("00:00");
-            return new WorkingTime(LocalTime.fromMillisOfDay(0));
+            time = LocalTime.parse(textField.getText());
         }
+
+        return new WorkingTime(time);
     }
 
     public void filter(JTextField text) {
