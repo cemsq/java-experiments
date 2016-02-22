@@ -52,6 +52,9 @@ public class WorkingTimeForm extends javax.swing.JFrame {
         labelPause.setText("pause:");
 
         textFrom.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textFromFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textFromFocusLost(evt);
             }
@@ -63,12 +66,27 @@ public class WorkingTimeForm extends javax.swing.JFrame {
         });
 
         textTo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textToFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textToFocusLost(evt);
             }
         });
 
+        textWorked.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textWorkedFocusGained(evt);
+            }
+        });
+
         jLabel1.setText("worked:");
+
+        textPause.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textPauseFocusGained(evt);
+            }
+        });
 
         jButton1.setText("compute");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -137,20 +155,33 @@ public class WorkingTimeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_textFromActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         String value = solver.solve();
         textWorked.setText(value);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void textFromFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFromFocusLost
-
         solver.filter(textFrom);
     }//GEN-LAST:event_textFromFocusLost
 
     private void textToFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textToFocusLost
-
         solver.filter(textTo);
     }//GEN-LAST:event_textToFocusLost
+
+    private void textFromFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFromFocusGained
+        textFrom.selectAll();
+    }//GEN-LAST:event_textFromFocusGained
+
+    private void textToFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textToFocusGained
+        textTo.selectAll();
+    }//GEN-LAST:event_textToFocusGained
+
+    private void textPauseFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textPauseFocusGained
+        textPause.selectAll();
+    }//GEN-LAST:event_textPauseFocusGained
+
+    private void textWorkedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textWorkedFocusGained
+        textWorked.selectAll();
+    }//GEN-LAST:event_textWorkedFocusGained
 
     /**
      * @param args the command line arguments

@@ -50,6 +50,15 @@ public class WorkingTime {
 
     @Override
     public String toString() {
-        return time.getHourOfDay() + ":" + time.getMinuteOfHour();
+        String str = "";
+        if (time.getHourOfDay() > 0) {
+            str = String.format("%sh", time.getHourOfDay());
+        }
+
+        if (time.getMinuteOfHour() > 0) {
+            str += String.format(" %sm", time.getMinuteOfHour());
+        }
+
+        return str;
     }
 }
