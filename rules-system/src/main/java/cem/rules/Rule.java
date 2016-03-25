@@ -31,7 +31,8 @@ public class Rule<T> implements RuleChecker<T> {
         Preconditions.checkNotNull(childList, "null child list");
 
         if (parentList.contains(parent) && childList.contains(child)) {
-            return RuleResult.create(action, errorMessage);
+            String message = Action.ALLOW.equals(action)? "" : errorMessage;
+            return RuleResult.create(action, message);
         }
 
         return RuleResult.create(Action.UNDEFINED, "");
