@@ -41,19 +41,14 @@ public class RulesContainer<T> implements RuleChecker<T> {
     public RuleResult check(List<T> parentList, List<T> childList) {
 
         boolean allow = false;
-        RuleResult result = RuleResult.create(Action.DENY, "no rules defined");
         for (Rule<T> rule : getRules()) {
-            result = rule.check(parentList, childList);
+            RuleResult result = rule.check(parentList, childList);
 
             if (result.isAllowed()) {
                 allow = true;
             } else if (result.isDenied()) {
-                break;
+                return result;
             }
-        }
-
-        if (result.isDenied()) {
-            return result;
         }
 
         if (allow) {
