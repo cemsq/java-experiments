@@ -5,10 +5,14 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 public enum Type {
+    System(Characteristic.System),
+
     Provider(Characteristic.Provider),
     Group(Characteristic.ProviderGroup),
     Clinic(Characteristic.ProviderShipToGroup),
-    Address(Characteristic.ProviderShipTo)
+    Address(Characteristic.ProviderShipTo),
+
+    Empty()
     ;
 
     private List<Characteristic> characteristics;
