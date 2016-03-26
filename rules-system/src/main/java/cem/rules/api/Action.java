@@ -1,4 +1,4 @@
-package cem.rules;
+package cem.rules.api;
 
 public enum Action {
     ALLOW,
