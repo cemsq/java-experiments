@@ -1,6 +1,6 @@
 package cem.rules.api;
 
-import cem.rules.test.OrgUnitExtension;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class RelationContainerTest {
 
     @Test(dataProvider = "dataProvider")
-    public void test(RelationContainer<OrgUnitExtension> container, String pCh, String cCh, Action action) {
+    public void test(RelationContainer<OrgUnitExtension> container, String pCh, String cCh, RelationResult relationResult) {
         OrgUnitExtension parent = new OrgUnitExtension();
         parent.add(pCh);
 
@@ -17,7 +17,8 @@ public class RelationContainerTest {
 
         RelationResult result = container.check(parent, child);
 
-        Assert.assertEquals(result.getAction(), action);
+        Assert.assertEquals(result.getAction(), relationResult.getAction());
+        Assert.assertEquals(result.getReason(), relationResult.getReason());
     }
 
     @DataProvider
@@ -30,36 +31,37 @@ public class RelationContainerTest {
         container.add(contains("C"), contains("A"), RelationResult.allow());
 
         container.add(contains("S"), contains("C"), RelationResult.deny("not allowed"));
+        container.add(contains("S"), contains("A"), RelationResult.deny("not defined"));
 
         return new Object[][] {
-                {container, "S", "P", Action.ALLOW},
-                {container, "S", "G", Action.ALLOW},
-                {container, "P", "C", Action.ALLOW},
-                {container, "G", "C", Action.ALLOW},
-                {container, "C", "A", Action.ALLOW},
+                {container, "S", "P", RelationResult.allow()},
+                {container, "S", "G", RelationResult.allow()},
+                {container, "P", "C", RelationResult.allow()},
+                {container, "G", "C", RelationResult.allow()},
+                {container, "C", "A", RelationResult.allow()},
 
-                {container, "S", "C", Action.DENY},
-                {container, "S", "A", Action.DENY},
+                {container, "S", "C", RelationResult.deny("not allowed")},
+                {container, "S", "A", RelationResult.deny("not defined")},
 
-                {container, "P", "S", Action.DENY},
-                {container, "P", "G", Action.DENY},
-                {container, "P", "P", Action.DENY},
-                {container, "P", "A", Action.DENY},
+                {container, "P", "S", RelationResult.deny("No rule matches")},
+                {container, "P", "G", RelationResult.deny("No rule matches")},
+                {container, "P", "P", RelationResult.deny("No rule matches")},
+                {container, "P", "A", RelationResult.deny("No rule matches")},
 
-                {container, "G", "S", Action.DENY},
-                {container, "G", "G", Action.DENY},
-                {container, "G", "P", Action.DENY},
-                {container, "G", "A", Action.DENY},
+                {container, "G", "S", RelationResult.deny("No rule matches")},
+                {container, "G", "G", RelationResult.deny("No rule matches")},
+                {container, "G", "P", RelationResult.deny("No rule matches")},
+                {container, "G", "A", RelationResult.deny("No rule matches")},
 
-                {container, "C", "S", Action.DENY},
-                {container, "C", "P", Action.DENY},
-                {container, "C", "G", Action.DENY},
-                {container, "C", "C", Action.DENY},
+                {container, "C", "S", RelationResult.deny("No rule matches")},
+                {container, "C", "P", RelationResult.deny("No rule matches")},
+                {container, "C", "G", RelationResult.deny("No rule matches")},
+                {container, "C", "C", RelationResult.deny("No rule matches")},
 
-                {container, "A", "S", Action.DENY},
-                {container, "A", "P", Action.DENY},
-                {container, "A", "G", Action.DENY},
-                {container, "A", "C", Action.DENY},
+                {container, "A", "S", RelationResult.deny("No rule matches")},
+                {container, "A", "P", RelationResult.deny("No rule matches")},
+                {container, "A", "G", RelationResult.deny("No rule matches")},
+                {container, "A", "C", RelationResult.deny("No rule matches")},
         };
     }
 

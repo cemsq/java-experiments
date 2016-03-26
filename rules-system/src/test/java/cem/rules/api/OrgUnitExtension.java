@@ -1,4 +1,4 @@
-package cem.rules.test;
+package cem.rules.api;
 
 import java.util.ArrayList;
 import java.util.List;

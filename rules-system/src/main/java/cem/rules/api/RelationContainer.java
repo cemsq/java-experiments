@@ -1,12 +1,13 @@
 package cem.rules.api;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
+import static cem.rules.api.RelationResult.*;
 
-import java.util.Set;
+import java.util.List;
 
 public class RelationContainer<OBJECT> implements RelationChecker<OBJECT> {
 
-    private Set<Relation<OBJECT>> relations = Sets.newHashSet();
+    private List<Relation<OBJECT>> relations = Lists.newArrayList();
 
     public RelationContainer() {
     }
@@ -38,9 +39,6 @@ public class RelationContainer<OBJECT> implements RelationChecker<OBJECT> {
             }
         }
 
-        Action action = allowed? Action.ALLOW : Action.DENY;
-        String message = allowed? "" : "No rule matches";
-
-        return RelationResult.create(action, message);
+        return allowed? allow() : deny("No rule matches");
     }
 }
