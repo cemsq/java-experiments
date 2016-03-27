@@ -10,6 +10,8 @@ import static cem.rules.topology.OrgUnitConditions.*;
 public class ProviderRules extends BasicTopologyRules implements RelationChecker<OrgUnit> {
 
     public ProviderRules() {
+        super();
+
         add(isSystem(), is(Type.Provider), allow());
         add(isSystem(), is(Type.Group), allow());
         add(is(Type.Provider), is(Type.Clinic), allow());

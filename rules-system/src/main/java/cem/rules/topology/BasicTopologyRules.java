@@ -21,8 +21,6 @@ public class BasicTopologyRules extends RelationContainer<OrgUnit> implements Re
 
         add(any(), isSystem(), deny("Not allowed to modify System node"));
         add(any(), is(Type.System), deny("System type not allowed"));
-
-
     }
 
     @Override
