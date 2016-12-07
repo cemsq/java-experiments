@@ -20,6 +20,7 @@ public class WorkingTimeForm extends javax.swing.JFrame {
      */
     public WorkingTimeForm() {
         initComponents();
+        System.out.println("my var: " + System.getProperty("my_var"));
         solver = new Solver(textFrom, textTo, textPause, textWorked);
     }
 

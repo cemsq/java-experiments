@@ -1,14 +1,17 @@
 package com.javaTest;
 
+import com.google.common.collect.Maps;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.Map;
 
 /**
  *
  */
 public class NullOperations {
 
-    @Test
+    @Test(expectedExceptions = NullPointerException.class)
     public void multiplyingByNull() {
         Float x = null;
         Float y = 4.0f;
@@ -21,5 +24,28 @@ public class NullOperations {
         String value = String.valueOf(object);
 
         Assert.assertTrue(value.length() >= 0);
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void comparingWithNull() {
+        Integer x = 5;
+        Integer y = null;
+
+        if (x > y) {
+
+        }
+    }
+
+    @Test
+    public void shouldBeFalseBecauseBooleanIsNull() {
+        Boolean x = Boolean.valueOf(null);
+
+        Assert.assertEquals(x, Boolean.FALSE);
+    }
+
+    @Test
+    public void insertNullInMap() {
+        Map<String, String> map = Maps.newHashMap();
+        map.put("key1", null);
     }
 }

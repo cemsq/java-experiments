@@ -1,33 +1,29 @@
 package cem.convex;
 
+import java.util.function.Function;
+
 /**
  *
  */
 public enum Component {
-    X {
-        @Override
-        public int getDistance(Point a, Point b) {
-            return Math.abs(a.getX() - b.getX());
-        }
+    X(Point::getX),
+    Y(Point::getY);
 
-        @Override
-        public Point getSmaller(Point a, Point b) {
-            return a.getX() < b.getX()? a: b;
-        }
-    },
-    Y {
-        @Override
-        public int getDistance(Point a, Point b) {
-            return Math.abs(a.getY() - b.getY());
-        }
+    private Function<Point, Integer> component;
 
-        @Override
-        public Point getSmaller(Point a, Point b) {
-            return a.getY() < b.getY()? a: b;
-        }
-    };
+    Component(Function<Point, Integer> component) {
+        this.component = component;
+    }
 
-    public abstract int getDistance(Point a, Point b);
+    public int getDistance(Point a, Point b) {
+        return Math.abs(component.apply(a) - component.apply(b));
+    }
 
-    public abstract Point getSmaller(Point a, Point b);
+    public Point getSmaller(Point a, Point b) {
+        return component.apply(a) <= component.apply(b)? a : b;
+    }
+
+    public Point getBigger(Point a, Point b) {
+        return component.apply(a) >= component.apply(b)? a : b;
+    }
 }

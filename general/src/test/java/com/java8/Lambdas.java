@@ -5,12 +5,10 @@ import com.google.common.collect.Lists;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.IntFunction;
-import java.util.stream.Stream;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -30,5 +28,14 @@ public class Lambdas {
 
 
         Assert.assertEquals(filtered.size(), 5);
+    }
+
+    @Test
+    public void collect() {
+        List<Integer> list = Arrays.asList(1, 1, 2, 3, 4, 2, 5);
+        Set<Integer> list2 = list.stream()
+                .collect(Collectors.toSet());
+
+        Assert.assertEquals(list2.size(), 5);
     }
 }

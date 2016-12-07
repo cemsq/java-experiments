@@ -105,6 +105,13 @@ public class VariableArguments {
         Assert.assertEquals(str, "Cesar Dario Mora Mariya");
     }
 
+    @Test
+    public void test() {
+        String stringFromInt = getStringFromInt();
+
+        Assert.assertEquals(stringFromInt, "");
+    }
+
     public String getStringFromInt(int ...args) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;

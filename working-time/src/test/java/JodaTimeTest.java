@@ -8,6 +8,8 @@ public class JodaTimeTest {
 
     @Test
     public void test() {
+
+
         LocalTime time = LocalTime.parse("10:00");
         Assert.assertEquals(time.getHourOfDay(), 10);
         Assert.assertEquals(time.getMinuteOfHour(), 0);
