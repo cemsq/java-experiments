@@ -72,12 +72,9 @@
         <Java>
             <FileTemplate
                     id="Entity"
-                    fileName="{Entity}"
                     module="server/services/api"
                     sourcePath="src/main/java"
                     relativePackage="model"
-                    template="templates/java/Entity.vm"
-                    headerTemplate="templates/java/JavaHeaderTemplate.vm"
                     >
                 <Dependency id="EntityBase"/>
             </FileTemplate>

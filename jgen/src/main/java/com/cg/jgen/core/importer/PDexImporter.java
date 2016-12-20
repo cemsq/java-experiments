@@ -169,7 +169,7 @@ public class PDexImporter {
     private static EnumValue buildEnumValue(Element enumValueElement) {
         String id = enumValueElement.getAttributeValue("id");
         Integer sortSequence = Integer.valueOf(enumValueElement.getAttributeValue("sortSequence"));
-        String code = enumValueElement.getAttributeValue("code");
+        String code = enumValueElement.getAttributeValue("core");
         String displayText = enumValueElement.getAttributeValue("displayText");
 
         return new EnumValue(id, code, displayText, sortSequence);

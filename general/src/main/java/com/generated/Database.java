@@ -107,7 +107,7 @@ import javax.xml.bind.annotation.XmlValue;
  *                                           &lt;simpleContent>
  *                                             &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
  *                                               &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                                               &lt;attribute name="code" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                                               &lt;attribute name="core" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                                               &lt;attribute name="displayText" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                                               &lt;attribute name="sortSequence" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
  *                                             &lt;/extension>
@@ -906,7 +906,7 @@ public class Database {
      *                                 &lt;simpleContent>
      *                                   &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
      *                                     &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                                     &lt;attribute name="code" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                                     &lt;attribute name="core" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                                     &lt;attribute name="displayText" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                                     &lt;attribute name="sortSequence" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
      *                                   &lt;/extension>
@@ -1050,7 +1050,7 @@ public class Database {
          *                       &lt;simpleContent>
          *                         &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
          *                           &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *                           &lt;attribute name="code" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *                           &lt;attribute name="core" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
          *                           &lt;attribute name="displayText" type="{http://www.w3.org/2001/XMLSchema}string" />
          *                           &lt;attribute name="sortSequence" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
          *                         &lt;/extension>
@@ -1884,7 +1884,7 @@ public class Database {
              *             &lt;simpleContent>
              *               &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
              *                 &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-             *                 &lt;attribute name="code" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+             *                 &lt;attribute name="core" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
              *                 &lt;attribute name="displayText" type="{http://www.w3.org/2001/XMLSchema}string" />
              *                 &lt;attribute name="sortSequence" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
              *               &lt;/extension>
@@ -1948,7 +1948,7 @@ public class Database {
                  *   &lt;simpleContent>
                  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
                  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-                 *       &lt;attribute name="code" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+                 *       &lt;attribute name="core" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
                  *       &lt;attribute name="displayText" type="{http://www.w3.org/2001/XMLSchema}string" />
                  *       &lt;attribute name="sortSequence" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
                  *     &lt;/extension>
@@ -1968,7 +1968,7 @@ public class Database {
                     protected String value;
                     @XmlAttribute(name = "id", required = true)
                     protected String id;
-                    @XmlAttribute(name = "code", required = true)
+                    @XmlAttribute(name = "core", required = true)
                     protected String code;
                     @XmlAttribute(name = "displayText")
                     protected String displayText;
@@ -2024,7 +2024,7 @@ public class Database {
                     }
 
                     /**
-                     * Ruft den Wert der code-Eigenschaft ab.
+                     * Ruft den Wert der core-Eigenschaft ab.
                      * 
                      * @return
                      *     possible object is
@@ -2036,7 +2036,7 @@ public class Database {
                     }
 
                     /**
-                     * Legt den Wert der code-Eigenschaft fest.
+                     * Legt den Wert der core-Eigenschaft fest.
                      * 
                      * @param value
                      *     allowed object is

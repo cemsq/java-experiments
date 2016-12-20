@@ -19,7 +19,7 @@ public class UnmatchedFieldsExtractor {
         Item old = new Item();
         old.setText("hello storm");
         old.setCode("123");
-        old.setName("old");
+        old.setName("test");
         old.setNumber(1);
 
         Item newObj = new Item();

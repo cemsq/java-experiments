@@ -4,8 +4,7 @@ import cem.rules.api.RelationChecker;
 import cem.rules.test.OrgUnit;
 import cem.rules.test.Type;
 
-import static cem.rules.api.RelationResult.*;
-import static cem.rules.topology.OrgUnitConditions.*;
+import static cem.rules.topology.TopologyRulesFactory.*;
 
 public class ProviderRules extends BasicTopologyRules implements RelationChecker<OrgUnit> {
 

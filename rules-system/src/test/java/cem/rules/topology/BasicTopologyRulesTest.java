@@ -35,11 +35,6 @@ public class BasicTopologyRulesTest {
 
         RelationResult result = checker.check(parent, child);
 
-        String message = "";
-//        if (parent != null && child != null) {
-//            message = String.format("parent: %s      child: %s", parent.getType(), child.getType());
-//        }
-
         Assert.assertEquals(result.getAction(), relationResult.getAction());
         Assert.assertEquals(result.getReason(), relationResult.getReason());
     }
@@ -67,7 +62,7 @@ public class BasicTopologyRulesTest {
     }
 
     public OrgUnit system() {
-        return new OrgUnit(OrgUnitConditions.SYSTEM_ID, Type.System);
+        return new OrgUnit(TopologyRulesFactory.SYSTEM_ID, Type.System);
     }
 
     public OrgUnit orgUnit(Type type) {

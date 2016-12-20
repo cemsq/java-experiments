@@ -43,6 +43,6 @@ public enum GeneratorType {
                 return new TsGenerator(config);
         }
 
-        throw new JGenException("Unreachable code");
+        throw new JGenException("Unreachable core");
     }
 }

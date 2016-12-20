@@ -1,4 +1,4 @@
-package old;
+package test;
 
 import com.google.common.base.Strings;
 

@@ -118,8 +118,8 @@ public class Main {
         manager.defineArgument("-ts", "generate TypeScript files", false);
         manager.defineArgument("-xml", "generate xml files", false);
 
-        manager.defineArgument("-backend", "generate backend-code (java entities, services, enums... and xml resources)", false);
-        manager.defineArgument("-frontend", "generate frontend-code (typescript entities and services)", false);
+        manager.defineArgument("-backend", "generate backend-core (java entities, services, enums... and xml resources)", false);
+        manager.defineArgument("-frontend", "generate frontend-core (typescript entities and services)", false);
 
         manager.defineArgument("-mig-update", "update migration file", false);
         manager.defineArgument("-compile", "compile Java files", false);

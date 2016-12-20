@@ -5,22 +5,22 @@ import com.google.common.base.Preconditions;
 public class Relation<OBJECT> implements RelationChecker<OBJECT> {
     private RelationCondition<OBJECT> leftCondition;
     private RelationCondition<OBJECT> rightCondition;
-    private RelationResult result;
+    private ResultProvider resultProvider;
 
-    public Relation(RelationCondition<OBJECT> leftCondition, RelationCondition<OBJECT> rightCondition, RelationResult result) {
+    public Relation(RelationCondition<OBJECT> leftCondition, RelationCondition<OBJECT> rightCondition, ResultProvider result) {
         Preconditions.checkNotNull(leftCondition, "null leftCondition");
         Preconditions.checkNotNull(rightCondition, "null rightCondition");
-        Preconditions.checkNotNull(result, "null result");
+        Preconditions.checkNotNull(result, "null resultProvider");
 
         this.leftCondition = leftCondition;
         this.rightCondition = rightCondition;
-        this.result = result;
+        this.resultProvider = result;
     }
 
     @Override
     public RelationResult check(OBJECT left, OBJECT right) {
         if (leftCondition.test(left) && rightCondition.test(right)) {
-            return result;
+            return resultProvider.get();
         }
 
         return RelationResult.undefined();
