@@ -24,7 +24,7 @@
         <module>usaco</module>
         <module>convex</module>
         <module>working-time</module>
-        <module>head-first</module>
+        <module>HeadFirst</module>
     </modules>
 
     <properties>

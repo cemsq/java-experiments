@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://storm.cgm.com/jgen/model/nmi"
+           elementFormDefault="qualified"
+           xmlns="http://storm.cgm.com/jgen/model/nmi"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.1"
+           xmlns:annox="http://annox.dev.java.net"
+           jaxb:extensionBindingPrefixes="annox">
+
+    <xs:simpleType name="columnType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CH"/>
+            <xs:enumeration value="IN"/>
+            <xs:enumeration value="FX"/>
+            <xs:enumeration value="TS"/>
+            <xs:enumeration value="DA"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cardinalityType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="many_to_one"/>
+            <xs:enumeration value="one_to_one"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="maxLenType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="2000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="dbObjectName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <!--oracle only allows 30 characters for object names-->
+            <xs:maxLength value="30"/>
+            <!--table, index and foreign key names should start with an uppercase letter-->
+            <xs:pattern value="[A-Z]([a-zA-Z0-9_])+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="dbColumnName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <!--oracle only allows 30 characters for object names-->
+            <xs:maxLength value="30"/>
+            <!--column names should start with a lower case letter-->
+            <xs:pattern value="[a-z]([a-zA-Z0-9_])+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Database">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Tables">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Table" maxOccurs="unbounded" minOccurs="1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="Comment" maxOccurs="1" minOccurs="0"/>
+                                        <xs:element name="Columns">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="Column" maxOccurs="unbounded" minOccurs="0">
+                                                        <xs:complexType>
+                                                            <xs:simpleContent>
+                                                                <xs:extension base="xs:string">
+                                                                    <xs:attribute type="dbColumnName" name="name" use="required"/>
+                                                                    <xs:attribute type="columnType" name="type" use="required"/>
+                                                                    <xs:attribute type="xs:string" name="defaultValue" use="optional"/>
+                                                                    <xs:attribute type="xs:string" name="domain" use="optional"/>
+                                                                    <xs:attribute type="xs:string" name="length" use="optional"/>
+                                                                    <xs:attribute type="xs:boolean" name="mandatory" use="optional" default="false"/>
+                                                                </xs:extension>
+                                                            </xs:simpleContent>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                            <!-- column names should be unique within one table,
+                                            unfortunately I could not find a way to make this check case insensitive-->
+                                            <xs:unique name="uniqueColumnName">
+                                                <xs:selector xpath="Column"/>
+                                                <xs:field xpath="@name"/>
+                                            </xs:unique>
+                                        </xs:element>
+                                        <xs:element name="Index" maxOccurs="unbounded" minOccurs="1">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="Columns">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="Column" maxOccurs="unbounded" minOccurs="1">
+                                                                    <xs:complexType>
+                                                                        <xs:simpleContent>
+                                                                            <xs:extension base="xs:string">
+                                                                                <xs:attribute type="dbColumnName" name="name" use="required"/>
+                                                                            </xs:extension>
+                                                                        </xs:simpleContent>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                        <!-- column names should be unique within one table -->
+                                                        <xs:unique name="uniqueIndexColumnName">
+                                                            <xs:selector xpath="Column"/>
+                                                            <xs:field xpath="@name"/>
+                                                        </xs:unique>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute type="dbObjectName" name="name" use="required"/>
+                                                <xs:attribute type="xs:boolean" name="primary" use="optional"/>
+                                                <xs:attribute type="xs:boolean" name="unique" use="optional"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Values" maxOccurs="unbounded" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="Value" maxOccurs="unbounded" minOccurs="0">
+                                                        <xs:complexType>
+                                                            <xs:simpleContent>
+                                                                <xs:extension base="xs:string">
+                                                                    <xs:attribute type="xs:string" name="id" use="required"/>
+                                                                    <xs:attribute type="xs:string" name="code" use="required"/>
+                                                                    <xs:attribute type="xs:string" name="displayText" use="optional"/>
+                                                                    <xs:attribute type="xs:integer" name="sortSequence" use="required"/>
+                                                                </xs:extension>
+                                                            </xs:simpleContent>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                            <!-- id and sortSequence must be unique within one table -->
+                                            <xs:unique name="uniqueId">
+                                                <xs:selector xpath="Value"/>
+                                                <xs:field xpath="@Id"/>
+                                            </xs:unique>
+                                            <xs:unique name="uniqueSortSequence">
+                                                <xs:selector xpath="Value"/>
+                                                <xs:field xpath="@sortSequence"/>
+                                            </xs:unique>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="dbObjectName" name="name" use="required"/>
+                                    <xs:attribute type="xs:boolean" name="isValueTable" use="optional"/>
+                                </xs:complexType>
+                                <!-- index column must be a table column
+                                 Caution: this check is case INSENSITIVE -->
+                                <!--xs:key name="keyTableColumn">
+                                    <xs:selector xpath="IndexColumn"/>
+                                    <xs:field xpath="@name"/>
+                                </xs:key>
+                                <xs:keyref name="indexColumnIsATableColumn" refer="keyTableColumn">
+                                    <xs:selector xpath="Index/IndexColumn"/>
+                                    <xs:field xpath="@name"/>
+                                </xs:keyref-->
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <!-- table name should be unique -->
+                    <xs:unique name="uniqueTableName">
+                        <xs:selector xpath="Table"/>
+                        <xs:field xpath="@name"/>
+                    </xs:unique>
+                    <!-- index name should be unique -->
+                    <xs:unique name="uniqueIndexName">
+                        <xs:selector xpath="Table/Index"/>
+                        <xs:field xpath="@name"/>
+                    </xs:unique>
+                </xs:element>
+                <xs:element name="ForeignKeys">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ForeignKey" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Column">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute type="dbColumnName" name="src" use="required"/>
+                                                        <xs:attribute type="dbColumnName" name="target" use="required"/>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="dbObjectName" name="name" use="required"/>
+                                    <xs:attribute type="dbObjectName" name="child" use="required"/>
+                                    <xs:attribute type="dbObjectName" name="parent" use="required"/>
+                                    <xs:attribute type="cardinalityType" name="cardinality" use="required"/>
+                                    <xs:attribute type="xs:boolean" name="masterDetail" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <!-- name of foreign keys should be unique -->
+                    <xs:unique name="uniqueForeignKeyName">
+                        <xs:selector xpath="ForeignKey"/>
+                        <xs:field xpath="@name"/>
+                    </xs:unique>
+                </xs:element>
+
+
+                <xs:element name="Domains" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Domain" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute type="dbObjectName" name="name" use="required"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <!-- id and sortSequence must be unique within one table -->
+                    <xs:unique name="uniqueDomainName">
+                        <xs:selector xpath="Domain"/>
+                        <xs:field xpath="@name"/>
+                    </xs:unique>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <!-- table name in the foreign key must exist in tables -->
+        <xs:key name="keyFkTableName">
+            <xs:selector xpath="Tables/Table"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="fromTableIsATableName" refer="keyFkTableName">
+            <xs:selector xpath="ForeignKeys/ForeignKey"/>
+            <xs:field xpath="@child"/>
+        </xs:keyref>
+        <xs:keyref name="toTableIsATableName" refer="keyFkTableName">
+            <xs:selector xpath="ForeignKeys/ForeignKey"/>
+            <xs:field xpath="@parent"/>
+        </xs:keyref>
+
+        <!-- column name in the foreign key must be a table column
+            This check does not work: If the selector path is at table level,
+            we only get the first column. If the selector path is at column level,
+            there is no way to get up to the table level
+        -->
+        <!--<xs:key name="keyFkColumnName">-->
+            <!--<xs:selector xpath="Tables/Table/Columns/IndexColumn"/>-->
+            <!--<xs:field xpath="@name"/>-->
+            <!-- this does NOT work: there is not way to get from the child element to the parent element here -->
+            <!--<xs:field xpath="../../@name"/>-->
+        <!--</xs:key>-->
+        <!--<xs:keyref name="targetColumnIsATableColumn" refer="keyFkColumnName">-->
+            <!--<xs:selector xpath="ForeignKeys/ForeignKey/IndexColumn"/>-->
+            <!--<xs:field xpath="@target"/>-->
+            <!-- this does NOT work: there is not way to get from the child element to the parent element here -->
+            <!--<xs:field xpath="../@target"/>-->
+        <!--</xs:keyref>-->
+        <!-- domain name in column must match domain name -->
+        <xs:key name="keyDomainName">
+            <xs:selector xpath="Domains/Domain"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="domainInColumnMustBeADefinedDomain" refer="keyDomainName">
+            <xs:selector xpath="Tables/Table/Columns/Column"/>
+            <xs:field xpath="@domain"/>
+        </xs:keyref>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Database" type="database"/>
+
+    <xs:complexType name="database">
+        <xs:sequence>
+            <xs:element name="Tables" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Table" type="table" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="table">
+        <xs:sequence>
+            <xs:element name="Comment" type="xs:string" minOccurs="0"/>
+            <xs:element name="Columns" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Column" type="column" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="isValueTable" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="column">
+        <xs:sequence/>
+        <xs:attribute name="type" type="columnType" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="mandatory" type="xs:boolean"/>
+        <xs:attribute name="length" type="xs:string"/>
+        <xs:attribute name="defaultValue" type="xs:string"/>
+        <xs:attribute name="domain" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:simpleType name="columnType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CH"/>
+            <xs:enumeration value="IN"/>
+            <xs:enumeration value="FX"/>
+            <xs:enumeration value="TS"/>
+            <xs:enumeration value="DA"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+
