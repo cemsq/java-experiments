@@ -9,7 +9,10 @@ import org.testng.annotations.Test;
  */
 public class StringTest {
 
-
+    @Test
+    public void compareTo() {
+        System.out.println("af-".compareToIgnoreCase("aba"));
+    }
 
     @DataProvider
     public Object[][] splitProvider() {

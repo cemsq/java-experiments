@@ -21,7 +21,7 @@ public class MapCollectors {
     @Test
     public void test() {
         List<String> list = Lists.newArrayList("key1");
-        list.stream()
+        Map<String, Object> map = list.stream()
                 .collect(Collectors.toMap(
                         name -> name,
                         name -> null));
@@ -35,7 +35,11 @@ public class MapCollectors {
                 Paar.create(3, null)
         );
 
-        list.stream();
+        Map<Integer, String> map = list.stream()
+                .collect(Collectors.toMap(
+                        Paar::getKey,
+                        Paar::getValue
+                ));
     }
 
 //    public static <T, K, U>
@@ -70,6 +74,14 @@ public class MapCollectors {
         public Paar(Integer key, String value) {
             this.key = key;
             this.value = value;
+        }
+
+        public Integer getKey() {
+            return key;
+        }
+
+        public String getValue() {
+            return value;
         }
     }
 }

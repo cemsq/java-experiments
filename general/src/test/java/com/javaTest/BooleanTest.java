@@ -15,7 +15,8 @@ public class BooleanTest {
                 {"true", true},
                 {"True", true},
                 {"tRUe", true},
-                {"yes", true},
+
+                {"yes", false},
 
                 {"false", false},
                 {"False", false},
@@ -33,5 +34,11 @@ public class BooleanTest {
                 "error testing [value: '" + value + "']");
     }
 
+    @Test
+    public void instanceOfBoolean() {
+        boolean a = true;
+        Object obj = a;
 
+        Assert.assertTrue(obj instanceof Boolean);
+    }
 }
