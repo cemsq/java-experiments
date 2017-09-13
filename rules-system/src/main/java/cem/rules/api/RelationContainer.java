@@ -12,14 +12,6 @@ public class RelationContainer<OBJECT> implements RelationChecker<OBJECT> {
     public RelationContainer() {
     }
 
-    public RelationContainer<OBJECT> add(
-            RelationCondition<OBJECT> parent,
-            RelationCondition<OBJECT> child,
-            RelationResult result) {
-
-        return add(new Relation<>(parent, child, result));
-    }
-
     public RelationContainer<OBJECT> add(Relation<OBJECT> rule) {
         relations.add(rule);
 

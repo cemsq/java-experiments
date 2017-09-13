@@ -177,7 +177,7 @@ public class ForeignKey {
         return open + sbRelations.toString() + close;
     }
 
-    // unused code
+    // unused core
 //    public String getMember() {
 //        return String.format("private %s %s;", parentTable, Utility.camelCase(parentTable));
 //    }

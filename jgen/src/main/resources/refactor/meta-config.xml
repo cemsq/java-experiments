@@ -1,0 +1,12 @@
+<Config>
+    <FileTemplates baseDir="config/templates">
+        <FileTemplate
+                id="Entity"
+                fileName="{Entity}"
+                extension="java"
+                template="abc.vm"
+                headerTemplate="def.vm"
+        />
+
+    </FileTemplates>
+</Config>

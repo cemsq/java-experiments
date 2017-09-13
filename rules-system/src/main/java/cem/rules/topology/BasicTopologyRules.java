@@ -1,15 +1,14 @@
 package cem.rules.topology;
 
-import cem.rules.api.RelationChecker;
-import cem.rules.api.RelationContainer;
-import cem.rules.api.RelationResult;
+import cem.rules.api.*;
 import cem.rules.test.OrgUnit;
 import cem.rules.test.Type;
 
-import static cem.rules.api.RelationResult.*;
-import static cem.rules.topology.OrgUnitConditions.*;
+import static cem.rules.topology.TopologyRulesFactory.*;
 
-public class BasicTopologyRules extends RelationContainer<OrgUnit> implements RelationChecker<OrgUnit> {
+public class BasicTopologyRules implements RelationChecker<OrgUnit> {
+
+    private RelationContainer<OrgUnit> container = new RelationContainer<>();
 
     public BasicTopologyRules() {
         add(isNull(), any(), deny("Parent is null"));
@@ -23,8 +22,12 @@ public class BasicTopologyRules extends RelationContainer<OrgUnit> implements Re
         add(any(), is(Type.System), deny("System type not allowed"));
     }
 
+    public void add(RelationCondition<OrgUnit> parent, RelationCondition<OrgUnit> child, ResultProvider provider) {
+        container.add(new Relation<>(parent, child, provider));
+    }
+
     @Override
     public RelationResult check(OrgUnit left, OrgUnit right) {
-        return super.check(left, right);
+        return container.check(left, right);
     }
 }

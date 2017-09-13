@@ -15,7 +15,7 @@ public class JsonHelperTest {
     public void test() {
         Map<String, Object> map = new HashMap<>();
 
-        build(map, "item.code", "my_analyzer");
+        build(map, "item.core", "my_analyzer");
         build(map, "item.name", "my_analyzer");
         build(map, "item.ingredient.number", "my_analyzer");
 

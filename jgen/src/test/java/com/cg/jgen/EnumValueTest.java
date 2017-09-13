@@ -20,11 +20,11 @@ public class EnumValueTest {
     private String xmlInput = "<Tables>\n" +
             "\t<Table name=\"RequestState\" isValueTable=\"true\">\t\n" +
             "\t\t<Values>\n" +
-            "\t\t\t<Value id=\"0\" code=\"undefined\" displayText=\"not defined\" sortSequence=\"1\"/>\n" +
-            "\t\t\t<Value id=\"1\" code=\"entered\" sortSequence=\"2\"/>\n" +
-            "\t\t\t<Value id=\"2\" code=\"signed\" sortSequence=\"3\"/>\n" +
-            "\t\t\t<Value id=\"3\" code=\"shipped\" displayText=\"items shipped\" sortSequence=\"4\"/>\n" +
-            "\t\t\t<Value id=\"4\" code=\"finished\" sortSequence=\"5\"/>\n" +
+            "\t\t\t<Value id=\"0\" core=\"undefined\" displayText=\"not defined\" sortSequence=\"1\"/>\n" +
+            "\t\t\t<Value id=\"1\" core=\"entered\" sortSequence=\"2\"/>\n" +
+            "\t\t\t<Value id=\"2\" core=\"signed\" sortSequence=\"3\"/>\n" +
+            "\t\t\t<Value id=\"3\" core=\"shipped\" displayText=\"items shipped\" sortSequence=\"4\"/>\n" +
+            "\t\t\t<Value id=\"4\" core=\"finished\" sortSequence=\"5\"/>\n" +
             "\t\t</Values>\n" +
             "\t</Table>\n" +
             "</Tables>";
@@ -111,7 +111,7 @@ public class EnumValueTest {
         List<EnumValue> enumValues = initTest();
 
         String expectedXml = "<BusinessObject xmlns=\"http://www.cgm.com/2011/helix/metadata\" name=\"/com/cgm/storm/model/RequestState\">\n" +
-                "    <Columns>id, code, sortSequence</Columns>\n" +
+                "    <Columns>id, core, sortSequence</Columns>\n" +
                 "    <Data>\n" +
                 "        <Row>0, \"undefined\", 1</Row>\n" +
                 "        <Row>1, \"entered\", 2</Row>\n" +

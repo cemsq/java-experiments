@@ -23,14 +23,14 @@ public class RelationContainerTest {
     @DataProvider
     public Object[][] dataProvider() {
         RelationContainer<OrgUnitExtension> container = new RelationContainer<>();
-        container.add(contains("S"), contains("P"), RelationResult.allow());
-        container.add(contains("S"), contains("G"), RelationResult.allow());
-        container.add(contains("P"), contains("C"), RelationResult.allow());
-        container.add(contains("G"), contains("C"), RelationResult.allow());
-        container.add(contains("C"), contains("A"), RelationResult.allow());
+        container.add(rule(contains("S"), contains("P"), RelationResult.allow()));
+        container.add(rule(contains("S"), contains("G"), RelationResult.allow()));
+        container.add(rule(contains("P"), contains("C"), RelationResult.allow()));
+        container.add(rule(contains("G"), contains("C"), RelationResult.allow()));
+        container.add(rule(contains("C"), contains("A"), RelationResult.allow()));
 
-        container.add(contains("S"), contains("C"), RelationResult.deny("not allowed"));
-        container.add(contains("S"), contains("A"), RelationResult.deny("not defined"));
+        container.add(rule(contains("S"), contains("C"), RelationResult.deny("not allowed")));
+        container.add(rule(contains("S"), contains("A"), RelationResult.deny("not defined")));
 
         return new Object[][] {
                 {container, "S", "P", RelationResult.allow()},
@@ -62,6 +62,13 @@ public class RelationContainerTest {
                 {container, "A", "G", RelationResult.deny("No rule matches")},
                 {container, "A", "C", RelationResult.deny("No rule matches")},
         };
+    }
+
+    public Relation<OrgUnitExtension> rule(
+            RelationCondition<OrgUnitExtension> parent,
+            RelationCondition<OrgUnitExtension> child,
+            RelationResult result) {
+        return new Relation<>(parent, child, () -> result);
     }
 
     public RelationCondition<OrgUnitExtension> contains(String chr) {

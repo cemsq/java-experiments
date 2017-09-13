@@ -45,7 +45,7 @@ public class FileTemplate {
      */
     private String headerTemplate;
     /**
-     * relative path to the source code from the appPath + module
+     * relative path to the source core from the appPath + module
      */
     private String sourcePath;
     /**

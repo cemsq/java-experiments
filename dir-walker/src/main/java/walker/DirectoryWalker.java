@@ -1,8 +1,11 @@
 package walker;
 
+import com.google.common.collect.Lists;
+import walker.api.FileMapper;
+import walker.filter.Filters;
+
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,39 +13,53 @@ import java.util.List;
  */
 public class DirectoryWalker {
 
-    private String path;
-    private List<File> files;
-    private FileFilter filter = new DefaultFilter();
+    public DirectoryWalker() {
+
+    }
 
     public List<File> analyze(String path) {
-        this.path = path;
-        files = new ArrayList<>();
+        return analyze(path, FileMapper.DEFAULT);
+    }
 
-        analyse(new File(path));
+    public<T> List<File> analyze(String path, FileFilter filter) {
+        return analyze(path, filter, FileMapper.DEFAULT);
+    }
+
+    public<T> List<T> analyze(String path, FileMapper<T> mapper) {
+        return analyze(path, Filters.DEFAULT, mapper);
+    }
+
+    public<T> List<T> analyze(String path, FileFilter filter, FileMapper<T> mapper) {
+        List<T> collected = Lists.newArrayList();
+
+        internalAnalyze(filter, new File(path), collected, mapper);
+
+        return collected;
+    }
+
+    private<T> void internalAnalyze(FileFilter evaluator, File file, List<T> collected, FileMapper<T> mapper) {
+        if (file.isDirectory()) {
+            for (File f : listFiles(file)) {
+                internalAnalyze(evaluator, f, collected, mapper);
+            }
+
+        } else if (evaluator.accept(file)){
+            collected.add(mapper.map(file));
+        }
+    }
+
+    private File[] listFiles(File file) {
+        File[] files = null;
+
+        if (file != null) {
+            files = file.listFiles();
+        }
+
+        if (files == null) {
+            files = new File[]{};
+        }
 
         return files;
-    }
-
-    private void analyse(File file) {
-        if (file.isDirectory()) {
-            File list[] = file.listFiles();
-            for (File f : list) {
-                analyse(f);
-            }
-        } else if (filter.accept(file)){
-            files.add(file);
-        }
-    }
-
-    public void setFilter(FileFilter filter) {
-        this.filter = filter;
-    }
-
-    private class DefaultFilter implements FileFilter {
-        @Override
-        public boolean accept(File pathname) {
-            return true;
-        }
     }
 }
 

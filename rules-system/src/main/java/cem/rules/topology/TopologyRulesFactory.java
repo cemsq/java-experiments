@@ -1,16 +1,26 @@
 package cem.rules.topology;
 
 import cem.rules.api.RelationCondition;
+import cem.rules.api.RelationResult;
+import cem.rules.api.ResultProvider;
 import cem.rules.test.Characteristic;
 import cem.rules.test.OrgUnit;
 import cem.rules.test.Type;
 
-public class OrgUnitConditions {
+public class TopologyRulesFactory {
 
     public final static Integer SYSTEM_ID = 1;
 
-    private OrgUnitConditions() {
+    private TopologyRulesFactory() {
 
+    }
+
+    public static ResultProvider allow() {
+        return RelationResult::allow;
+    }
+
+    public static ResultProvider deny(String message) {
+        return () -> RelationResult.deny(message);
     }
 
     public static RelationCondition<OrgUnit> isSystem() {
