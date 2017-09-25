@@ -9,6 +9,6 @@ public class IntegerTest {
 
     @Test
     public void shouldParse() {
-        Integer x = Integer.parseInt("2,0");
+        Integer x = Integer.parseInt("2.0");
     }
 }

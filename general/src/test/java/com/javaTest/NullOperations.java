@@ -48,4 +48,25 @@ public class NullOperations {
         Map<String, String> map = Maps.newHashMap();
         map.put("key1", null);
     }
+
+    @Test
+    public void instanceOf() {
+        Assert.assertEquals(null instanceof String, false);
+    }
+
+    @Test
+    public void testNullArgs() {
+        methodWithArguments(null);
+    }
+
+    @Test
+    public void testEmptyArgs() {
+        methodWithArguments();
+    }
+
+    public void methodWithArguments(String ... args) {
+        for (String arg : args) {
+            System.out.println(arg);
+        }
+    }
 }
