@@ -3,6 +3,7 @@ package com.libs.sets;
 import com.google.common.collect.Sets;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.collections.Lists;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -37,9 +38,20 @@ public class SetTest {
         persons.add(new Person(4, "d"));
         persons.add(new Person(3, "c"));
         persons.add(new Person(2, "b"));
+        persons.add(new Person(2, "b"));
+        persons.add(new Person(2, "b"));
 
         Person person1 = new Person(1, "a");
         persons.add(person1);
+        persons.add(person1);
+        persons.add(person1);
+
+        Assert.assertEquals(persons.size(), 4, "size");
+
+        Assert.assertTrue(persons.contains(new Person(2, "asc")), "contains");
+        Assert.assertTrue(persons.containsAll(
+                Lists.newArrayList(new Person(2, "asdf"), new Person(4, "abc"))
+        ), "containsall");
 
         Person[] array = persons.toArray(new Person[]{});
         Assert.assertEquals(array[0].getName(), "a", "name not match after insertion");
@@ -48,6 +60,7 @@ public class SetTest {
         array = persons.toArray(new Person[]{});
         Assert.assertEquals(array[0].getName(), "carl", "name not match after insertion");
     }
+
 
     class Person {
         private Integer id;
@@ -83,25 +96,25 @@ public class SetTest {
             return name;
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (!(o instanceof Person)) {
-                return false;
-            }
-
-            Person person = (Person) o;
-
-            return !(name != null ? !name.equals(person.name) : person.name != null);
-
-        }
-
-        @Override
-        public int hashCode() {
-            return name != null ? name.hashCode() : 0;
-        }
+//        @Override
+//        public boolean equals(Object o) {
+//            if (this == o) {
+//                return true;
+//            }
+//            if (!(o instanceof Person)) {
+//                return false;
+//            }
+//
+//            Person person = (Person) o;
+//
+//            return !(name != null ? !name.equals(person.name) : person.name != null);
+//
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            return name != null ? name.hashCode() : 0;
+//        }
     }
 }
 

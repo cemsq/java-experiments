@@ -46,4 +46,12 @@ public class StringTest {
 
         Assert.assertTrue(a.compareTo(b) > 0);
     }
+
+    @Test
+    public void test() {
+        String val = null;
+        String value = String.format("value = %s", val);
+
+        Assert.assertEquals(value, "value = ");
+    }
 }

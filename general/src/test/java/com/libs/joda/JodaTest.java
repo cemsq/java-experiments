@@ -3,6 +3,7 @@ package com.libs.joda;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
@@ -16,7 +17,7 @@ import org.testng.annotations.Test;
 public class JodaTest {
 
     @Test
-    public void test() {
+    public void shouldParseDateTime() {
         String str = "YYJ";
         DateTimeFormatter format = DateTimeFormat.forPattern(str);
 
@@ -25,6 +26,37 @@ public class JodaTest {
         DateTime parse = DateTime.parse("14001", format);
 
         System.out.println(parse);
+    }
+
+    @Test
+    public void shouldCompareMilliseconds() throws InterruptedException {
+        LocalDateTime init = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+
+        System.out.println(init);
+        System.out.println(now);
+
+
+        System.out.println(now.getMillisOfDay() - init.getMillisOfDay());
+        ;
+    }
+
+    @Test
+    public void shouldPrintYearFor_1_1_2018() {
+        DateTime date = DateTime.parse("2018/1/1", DateTimeFormat.forPattern("YYYY/MM/dd"));
+
+        Assert.assertEquals(date.getYear(), 2018);
+    }
+
+    @Test
+    public void print() {
+        DateTimeFormatter format = DateTimeFormat.forPattern("YYYY-MM-dd'T'HH:mm:ss");
+
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+        System.out.println(now.toString(format));
+
+        System.out.println(LocalDate.now());
     }
 
     @Test

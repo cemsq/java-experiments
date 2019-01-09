@@ -29,4 +29,14 @@ public class ListsTest {
         }
 
     }
+
+    @Test
+    public void subList() {
+        List<Integer> list = Lists.newArrayList(1, 2, 3, 4, 5);
+
+        List<Integer> subList = list.subList(0, 2);
+
+
+        Assert.assertEquals(list.size(), 5, "after subList.clear");
+    }
 }

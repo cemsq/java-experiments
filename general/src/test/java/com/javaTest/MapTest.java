@@ -1,5 +1,6 @@
-package com;
+package com.javaTest;
 
+import com.google.common.collect.Maps;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,6 +12,17 @@ import java.util.Map;
  *
  */
 public class MapTest {
+
+    @Test
+    public void shouldRemoveWhenPutNull() {
+        Map<String, String> map = Maps.newHashMap();
+        map.put("k1", "my value");
+
+        map.put("k1", null);
+
+        Assert.assertEquals(map.size(), 1, "map.size after put");
+    }
+
     @Test
     public void test() {
         Map<String, String> map = new HashMap<>();
