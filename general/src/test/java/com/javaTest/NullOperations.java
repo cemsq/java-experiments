@@ -64,6 +64,15 @@ public class NullOperations {
         methodWithArguments();
     }
 
+    @Test
+    public void testNullBooleanInIf() {
+        Assert.assertFalse(check(null));
+    }
+
+    private boolean check(Boolean b) {
+        return b;
+    }
+
     public void methodWithArguments(String ... args) {
         for (String arg : args) {
             System.out.println(arg);
