@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws JAXBException, IOException, SAXException {
 
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = sf.newSchema(new File("jgen2\\pdexSchema.xml"));
+//        Schema schema = sf.newSchema(new File("jgen2\\schema\\pdexSchema.xml"));
 
         JAXBContext jc = JAXBContext.newInstance(Database.class);
         Unmarshaller unmarshaller = jc.createUnmarshaller();

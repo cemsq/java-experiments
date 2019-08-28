@@ -26,6 +26,7 @@
         <module>working-time</module>
         <module>HeadFirst</module>
         <module>workflow</module>
+        <module>query-writer</module>
     </modules>
 
     <properties>
