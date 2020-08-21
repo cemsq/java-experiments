@@ -41,4 +41,13 @@ public class BooleanTest {
 
         Assert.assertTrue(obj instanceof Boolean);
     }
+
+     @Test
+    public void testBooleanNull() {
+        Boolean x = null;
+        
+        if (x != false) {
+
+        }
+    }
 }

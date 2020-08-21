@@ -28,4 +28,40 @@ public class FetchStrategyTest {
 
         Assert.assertEquals(values.toString(), expected);
     }
+
+    @Test
+    public void should() {
+        Supplier<StringJoiner> joiner = () -> new StringJoiner("\n");
+
+        StringJoiner values = joiner.get();
+        new FetchStrategy<>()
+                .join("subsets.subsetItems.itemUnit.unit", FetchType.A)
+                .join("subsets.subsetItems.item", FetchType.A)
+                .forEach(e -> values.add(e.getJoinName()));
+
+        String expected = joiner.get()
+                .add("subsets.subsetItems.itemUnit.unit")
+                .add("subsets.subsetItems.item")
+                .toString();
+
+        Assert.assertEquals(values.toString(), expected);
+    }
+
+    @Test
+    public void should2() {
+        Supplier<StringJoiner> joiner = () -> new StringJoiner("\n");
+
+        StringJoiner values = joiner.get();
+        new FetchStrategy<>()
+                .join("subsets.subsetItems.item", FetchType.A)
+                .join("subsets.subsetItems.itemUnit.unit", FetchType.A)
+                .forEach(e -> values.add(e.getJoinName()));
+
+        String expected = joiner.get()
+                .add("subsets.subsetItems.item")
+                .add("subsets.subsetItems.itemUnit.unit")
+                .toString();
+
+        Assert.assertEquals(values.toString(), expected);
+    }
 }

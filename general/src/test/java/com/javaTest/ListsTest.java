@@ -33,10 +33,11 @@ public class ListsTest {
     @Test
     public void subList() {
         List<Integer> list = Lists.newArrayList(1, 2, 3, 4, 5);
+        int size = list.size() * 10;
 
-        List<Integer> subList = list.subList(0, 2);
+        List<Integer> subList = list.subList(0, 0);
+        subList.add(7);
 
-
-        Assert.assertEquals(list.size(), 5, "after subList.clear");
+        Assert.assertEquals(list.toString(), "[1, 2, 3, 4, 5]");
     }
 }

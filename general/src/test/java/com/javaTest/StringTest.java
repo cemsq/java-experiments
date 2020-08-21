@@ -1,8 +1,12 @@
 package com.javaTest;
 
+import bsh.StringUtil;
+import com.sun.xml.internal.ws.util.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.Arrays;
 
 /**
  *
@@ -53,5 +57,20 @@ public class StringTest {
         String value = String.format("value = %s", val);
 
         Assert.assertEquals(value, "value = ");
+    }
+
+    @Test
+    public void shouldGetMaxSize() {
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            while (true) {
+                sb.append("          ");
+                System.out.println("length: " + sb.length());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("fail with: " + sb.length());
+        }
     }
 }

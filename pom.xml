@@ -27,6 +27,7 @@
         <module>HeadFirst</module>
         <module>workflow</module>
         <module>query-writer</module>
+        <module>join-strategy</module>
     </modules>
 
     <properties>

@@ -1,12 +1,15 @@
 package com.javaTest;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.lang.Math.floor;
+import static java.lang.Math.log;
 
 /**
  *
@@ -24,7 +27,62 @@ public class MapTest {
     }
 
     @Test
-    public void test() {
+    public void shouldGrow_mapHasAnInitialCapacity() {
+        Map<Integer, String> map = Maps.newHashMapWithExpectedSize(3);
+        map.put(1, "a");
+        map.put(2, "b");
+        map.put(3, "c");
+
+        map.put(4, "d");
+        map.put(5, "e");
+        map.put(6, "f");
+        map.put(7, "g");
+
+        Assert.assertEquals(map.size(), 7, "size");
+    }
+
+    @Test
+    public void linkedMapReinsertion() {
+        Map<Integer, String> map = Maps.newLinkedHashMap();
+        map.put(1, "a");
+        map.put(2, null);
+        map.put(3, "c");
+
+        assertEquals(map.values(), "a, null, c");
+
+        map.put(2, "b");
+        assertEquals(map.values(), "a, b, c");
+    }
+
+    @Test
+    public void shouldAlphabet() {
+        System.out.println(getString(28));
+    }
+
+    private static String getString(int n) {
+        char[] buf = new char[(int) floor(log(25 * (n + 1)) / log(26))];
+        for (int i = buf.length - 1; i >= 0; i--) {
+            n--;
+            buf[i] = (char) ('A' + n % 26);
+            n /= 26;
+        }
+        return new String(buf);
+    }
+
+    @Test
+    public void removeFromValues() {
+        Map<Integer, String> map = Maps.newLinkedHashMap();
+        map.put(1, "a");
+        map.put(2, "b");
+        map.put(3, "c");
+
+        map.values().remove("c");
+        assertEquals(map.values(), "a, b");
+        assertEquals(map.keySet(), "1, 2");
+    }
+
+    @Test
+    public void shouldContainsByValue() {
         Map<String, String> map = new HashMap<>();
 
         map.put("1", "aa");
@@ -46,6 +104,14 @@ public class MapTest {
         Integer i = store.get("1", Integer.class);
         String s = store.get("2", String.class);
         Double d = store.get("3", Double.class);
+    }
+
+    private void assertEquals(Collection<?> list, String expected) {
+        String values = list.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+
+        Assert.assertEquals(values, expected);
     }
 
     class ValueStore {

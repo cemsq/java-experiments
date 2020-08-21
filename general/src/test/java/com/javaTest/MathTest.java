@@ -1,10 +1,15 @@
 package com.javaTest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
+
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
 
 /**
  *
  */
+@Slf4j
 public class MathTest {
 
     @Test
@@ -16,10 +21,38 @@ public class MathTest {
     }
 
     @Test
-    public void floorDiv() {
-        double ceil = Math.ceil(2.2);
+    public void testRounds() {
+        printCeil(2.2);
+        printCeil(2.5);
 
-        System.out.println(ceil);
+        printFloor(2.2);
+        printFloor(2.5);
+
+        printRound(2.2);
+        printRound(2.5);
+
+        printInt(2.2);
+        printInt(2.5);
+    }
+
+    private void printInt(double x) {
+        printAs(x, "int", n -> (int) n);
+    }
+
+    private void printCeil(double x) {
+        printAs(x, "ceil", Math::ceil);
+    }
+
+    private void printRound(double x) {
+        printAs(x, "round", Math::round);
+    }
+
+    private void printFloor(double x) {
+        printAs(x, "floor", Math::floor);
+    }
+
+    private void printAs(double x, String info, DoubleFunction<Object> f) {
+        log.info("{} ({}) = {}", info, x, f.apply(x));
     }
 
     static float roundOff(float x, int position)

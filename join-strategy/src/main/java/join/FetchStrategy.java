@@ -48,7 +48,10 @@ public class FetchStrategy<F extends FetchStrategy<?>> {
             return;
         }
 
-        entries.removeIf(e -> joinName.startsWith(e.getJoinName()));
+        // add "." to e.joinName to solve:
+        //      joinName   = subsets.subsetItems.itemUnit.unit
+        //      e.joinName = subsets.subsetItems.item
+        entries.removeIf(e -> joinName.startsWith(e.getJoinName() + "."));
         entries.add(new FetchEntry(joinName, fetchType));
     }
 
@@ -56,7 +59,11 @@ public class FetchStrategy<F extends FetchStrategy<?>> {
         return find(e -> e.getJoinName().equals(joinName));
     }
 
-    private FetchEntry findByPrefix(String prefix) {
+    private FetchEntry findByPrefix(String _prefix) {
+        // add "." to prefix to solve:
+        //      e.joinName = subsets.subsetItems.itemUnit.unit
+        //      prefix     = subsets.subsetItems.item
+        String prefix = _prefix + ".";
         return find(e -> e.getJoinName().startsWith(prefix));
     }
 
