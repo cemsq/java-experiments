@@ -1,10 +1,15 @@
 package com.javaTest;
 
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -34,5 +39,38 @@ public class BigDecimalTest {
         System.out.println(b.add(a));
     }
 
+    @Test
+    public void roundHalfUp() {
+        double d = 1.0005;
+        BigDecimal bd = BigDecimal.valueOf(d);
+        Assert.assertEquals(bd.setScale(3, RoundingMode.HALF_UP).toString(), "1.001");
+    }
 
+
+
+    @DataProvider
+    public Object[][] provider() {
+        return new Object[][]{
+                {array(1, 2, 3, 4, 5), 2, "3, 4, 5, 1, 2"},
+                {array(1, 2, 3, 4, 5), 3, "4, 5, 1, 2, 3"},
+
+                {array(1, 2, 3, 4, 5, 6), 3, "4, 5, 6, 1, 2, 3"}
+        };
+    }
+
+    @Test(dataProvider = "provider")
+    public void assertSwap(List<Integer> list, int m, String expected) {
+
+        List<Integer> mElements = new ArrayList<>(list.subList(0, m));
+        List<Integer> first = new ArrayList<>(list.subList(m, list.size()));
+        list.clear();
+        list.addAll(first);
+        list.addAll(mElements);
+
+        Assert.assertEquals(list.toString(), "[" + expected + "]");
+    }
+
+    public List<Integer> array(Integer ...values) {
+        return new ArrayList<>(Arrays.asList(values));
+    }
 }
