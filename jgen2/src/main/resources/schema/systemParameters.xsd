@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://storm.cgm.com/systemParameters/schema"
+           elementFormDefault="qualified"
+           xmlns="http://storm.cgm.com/systemParameters/schema"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.1"
+           xmlns:annox="http://annox.dev.java.net"
+           jaxb:extensionBindingPrefixes="annox">
+
+    <xs:element name="System">
+        <xs:annotation>
+            <xs:appinfo>
+                <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name = "SystemParameters")</annox:annotateClass>
+            </xs:appinfo>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="1">
+                <xs:element name="Parameters" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence  minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="SystemParameter" type="SystemParameter" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                        <xs:attribute name="enabled" type="xs:boolean" use="optional" default="false"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="DataInterfaces">
+                    <xs:complexType>
+                        <xs:sequence  minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="DataInterface" type="FileDataInterface" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="enabled" type="xs:boolean" use="optional" default="false"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="SystemParameter">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="value" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FileDataInterface">
+        <xs:attribute name="id" type="xs:int"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="code" type="xs:string"/>
+        <xs:attribute name="port" type="xs:int"/>
+        <xs:attribute name="partnerId" type="xs:int"/>
+        <xs:attribute name="serverUrl" type="xs:string"/>
+        <xs:attribute name="serviceName" type="xs:string"/>
+        <xs:attribute name="externalSystemUser" type="xs:string"/>
+        <xs:attribute name="externalSystemPassword" type="xs:string"/>
+        <xs:attribute name="localSystemUser" type="xs:string"/>
+        <xs:attribute name="localSystemPassword" type="xs:string"/>
+    </xs:complexType>
+
+</xs:schema>
