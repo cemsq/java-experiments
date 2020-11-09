@@ -32,6 +32,25 @@ public class SetTest {
     }
 
     @Test
+    public void uniqueByInstance() {
+
+        Person p1 = new Person("ABC");
+        Person p2 = new Person("abc");
+
+        Set<Person> set = Sets.newLinkedHashSet();
+        set.add(p1);
+        set.add(p2);
+
+        Assert.assertEquals(set.toString(), "[ABC, abc]");
+
+        p1.setName("ABC-new");
+        Assert.assertEquals(set.toString(), "[ABC-new, abc]");
+
+        set.add(p1);
+        Assert.assertEquals(set.toString(), "[ABC-new, abc]");
+    }
+
+    @Test
     public void shouldModifyElements() {
         Set<Person> persons = Sets.newTreeSet(Comparator.comparing(Person::getId));
 
