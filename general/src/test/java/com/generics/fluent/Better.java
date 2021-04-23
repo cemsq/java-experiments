@@ -1,26 +1,55 @@
 package com.generics.fluent;
 
+import org.testng.annotations.Test;
+
 /**
  *
  */
 public class Better {
 
-    public class SuperClass<T extends SuperClass<? super T>> {
+    private static class Parent<T extends Parent<T>> {
 
-        public T a() {
-            return (T)this;
+        @SuppressWarnings("unchecked")
+        protected T cast() {
+            return (T) this;
+        }
+
+        public T parentMethod() {
+            return cast();
+        }
+
+        public T upper() {
+            return cast();
+        }
+
+        public T setBounds() {
+            return cast();
         }
     }
 
-    public class ChildClass extends SuperClass<ChildClass> {
+    private static class Child extends Parent<Child> {
 
-        public ChildClass b() {
+        public Child first() {
             return this;
         }
     }
 
+    @Test
     public void test() {
-        ChildClass c = new ChildClass();
-        c.a().a().b().a().b().b().b();
+        Child child = new Child();
+
+        child.first()
+                .first()
+                .setBounds()
+                .first()
+                .upper()
+                .parentMethod()
+                .first()
+                .parentMethod()
+                .parentMethod()
+                .parentMethod()
+                .first()
+                .first();
+
     }
 }

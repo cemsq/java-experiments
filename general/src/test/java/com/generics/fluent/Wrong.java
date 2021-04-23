@@ -7,31 +7,52 @@ import org.testng.annotations.Test;
  */
 public class Wrong {
 
-    public class SuperClass {
+    private static class ParentClass {
 
-        public SuperClass a() {
+        public ParentClass parentMethod() {
+            return this;
+        }
+
+        public ParentClass upper() {
             return this;
         }
     }
 
-    public class ChildClass extends SuperClass {
+    private static class ChildClass extends ParentClass {
 
         @Override
-        public ChildClass a() {
+        public ChildClass parentMethod() {
+            super.parentMethod();
             return this;
         }
 
-        public ChildClass b() {
+        @Override
+        public ChildClass upper() {
+            super.upper();
+            return this;
+        }
+
+        public ChildClass first() {
             return this;
         }
     }
 
     @Test
     public void test() {
-        ChildClass c = new ChildClass();
+        ChildClass child = new ChildClass();
 
-        c.b().a().b().a().a().a().b().b();
+        child.first()
+                .first()
+                .first()
+                .upper()
+                .parentMethod()
+                .first()
+                .parentMethod()
+                .parentMethod()
+                .parentMethod()
+                .first()
+                .first();
 
-        SuperClass a = c.a();
+        ParentClass a = child.parentMethod();
     }
 }
