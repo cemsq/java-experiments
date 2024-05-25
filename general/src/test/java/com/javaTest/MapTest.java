@@ -1,11 +1,13 @@
 package com.javaTest;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.floor;
@@ -15,6 +17,23 @@ import static java.lang.Math.log;
  *
  */
 public class MapTest {
+
+    @Test
+    public void putIfAbsent_onNullValue() {
+        Map<Integer, String> map = Maps.newHashMap();
+        Supplier<String> value = () -> map.get(1);
+
+        map.put(1, "val1");
+        map.putIfAbsent(1, "val2");
+        Assert.assertEquals(value.get(), "val1", "val1");
+
+        map.put(1, null);
+        Assert.assertNull(value.get(), "null");
+        Assert.assertEquals(map.size(), 1, "size with null value");
+
+        map.putIfAbsent(1, "new value");
+        Assert.assertEquals(value.get(), "new value", "putIfAbsent on null");
+    }
 
     @Test
     public void shouldRemoveWhenPutNull() {

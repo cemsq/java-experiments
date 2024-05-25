@@ -45,16 +45,12 @@ public class ThreadTest {
         Future<?> f1 = pool.submit(() -> {
             log.info("{}: failing", Thread.currentThread().getName());
             throw new IllegalArgumentException("it fails in first submit");
-//            try {
-//            } catch (Exception e) {
-//                log.error("", e);
-//            }
         });
 
         Future<?> f2 = pool.submit(() -> {
             log.info("{}: successful", Thread.currentThread().getName());
         });
 
-        Thread.sleep(10000);
+        Thread.sleep(5000);
     }
 }
