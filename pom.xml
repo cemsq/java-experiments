@@ -30,6 +30,7 @@
         <module>join-strategy</module>
         <module>ear-training</module>
         <module>jtlog</module>
+        <module>jkal</module>
     </modules>
 
     <properties>
