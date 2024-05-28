@@ -8,7 +8,7 @@ import static org.cem.jkal.model.Utils.round;
  *
  */
 @Getter
-public class Consumption extends AbstractProduct {
+public class Consumption extends AbstractItem {
 
     private double cal;
 

@@ -31,6 +31,7 @@
         <module>ear-training</module>
         <module>jtlog</module>
         <module>jkal</module>
+        <module>tvolumn</module>
     </modules>
 
     <properties>

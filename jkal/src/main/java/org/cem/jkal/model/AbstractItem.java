@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.function.ToDoubleFunction;
+
 import static org.cem.jkal.model.Utils.round;
 import static org.cem.jkal.model.Utils.toFactor;
 
@@ -13,7 +15,7 @@ import static org.cem.jkal.model.Utils.toFactor;
 @Getter
 @Setter
 @ToString
-public abstract class AbstractProduct {
+public abstract class AbstractItem {
 
     private static final double REF_100g = 100;
 
@@ -22,11 +24,11 @@ public abstract class AbstractProduct {
     private double protein;
     private double fat;
 
-    public AbstractProduct(String name, double carbs, double protein, double fat) {
+    public AbstractItem(String name, double carbs, double protein, double fat) {
         this(name, carbs, protein, fat, 100);
     }
 
-    public AbstractProduct(String name, double carbs, double protein, double fat, double g) {
+    public AbstractItem(String name, double carbs, double protein, double fat, double g) {
         this.name = name;
         setCarbs(toFactor(carbs, g, REF_100g));
         setProtein(toFactor(protein, g, REF_100g));
@@ -53,4 +55,13 @@ public abstract class AbstractProduct {
         return new Consumption(given + " g " + getName(), c, p, f, cals);
     }
 
+    public double computeFromCarbs(AbstractItem other, double given) {
+        return computeFrom(other, given, AbstractItem::getCarbs);
+    }
+
+    public double computeFrom(AbstractItem other, double given, ToDoubleFunction<AbstractItem> f) {
+        Consumption otherConsumption = other.consume(given);
+        double otherCarbs = f.applyAsDouble(otherConsumption);
+        return round(toFactor(REF_100g, f.applyAsDouble(this), otherCarbs));
+    }
 }

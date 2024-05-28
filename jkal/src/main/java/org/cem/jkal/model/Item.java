@@ -6,13 +6,13 @@ import lombok.experimental.Accessors;
  *
  */
 @Accessors(chain = true)
-public class Food extends AbstractProduct {
+public class Item extends AbstractItem {
 
-    public Food(String name, double carbs, double protein, double fat) {
+    public Item(String name, double carbs, double protein, double fat) {
         super(name, carbs, protein, fat);
     }
 
-    public Food(String name, double carbs, double protein, double fat, double factor) {
+    public Item(String name, double carbs, double protein, double fat, double factor) {
         super(name, carbs, protein, fat, factor);
     }
 

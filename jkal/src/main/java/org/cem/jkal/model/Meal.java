@@ -19,15 +19,15 @@ public class Meal {
         this.name = name;
     }
 
-    public Meal add(Food f, double consumed) {
-        entries.add(new Entry().setConsumed(consumed).setFood(f));
+    public Meal add(Item f, double consumed) {
+        entries.add(new Entry().setConsumed(consumed).setItem(f));
         return this;
     }
 
     public Consumption compute() {
         Consumption consumption = new Consumption(name);
         for (Entry e : entries) {
-            Consumption c = e.food.consume(e.consumed);
+            Consumption c = e.item.consume(e.consumed);
 //            System.out.println(c);
             consumption.add(c);
         }
@@ -39,6 +39,6 @@ public class Meal {
     @Accessors(chain = true)
     private static class Entry {
         private double consumed;
-        private Food food;
+        private Item item;
     }
 }
