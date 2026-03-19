@@ -166,21 +166,13 @@ public class NutritionTest {
                         .add(Meals.panConTopfen("m3", 2))
                         .add(Meals.standard("m4", Items.arroz, 0)),
 
-                new Plan("mini - 11/23 - 64.08 kg")
-                        .add(Meals.avenaNat("m1", 50, 0))
+                new Plan("mini - 03/16 - 63.19 kg")
+                        .add(Meals.avenaNat("m1", 60, 0))
 //                        .add(Meals.panConTopfen("m1", 5))
                         .add(Meals.standard("m2", Items.arroz, 60))
                         .add(Meals.grasa(30))
-                        .add(Meals.panConTopfen("m3", 0))
-                        .add(Meals.standard("m4", Items.arroz, 60)),
-
-        new Plan("mini - 11/23 - 64.08 kg")
-                .add(Meals.avenaNat("m1", 60, 0))
-//                        .add(Meals.panConTopfen("m1", 5))
-                .add(Meals.standard("m2", Items.arroz, 70))
-                .add(Meals.grasa(30))
-                .add(Meals.panConTopfen("m3", 3))
-                .add(Meals.standard("m4", Items.arroz, 0))
+                        .add(Meals.panConTopfen("m3", 4))
+                        .add(Meals.standard("m4", Items.arroz, 0))
         );
     }
 
@@ -298,6 +290,7 @@ public class NutritionTest {
         test(Meals.standard("arroz", Items.arroz, 70));
         test(Meals.avenaNat("avena", 70));
         test(Meals.avenaNat("avena", 80));
+        test(Meals.create("arroz").add(Items.arroz, 60));
     }
 
     private void test(Meal m) {
