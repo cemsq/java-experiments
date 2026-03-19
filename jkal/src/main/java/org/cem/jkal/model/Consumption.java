@@ -30,12 +30,12 @@ public class Consumption extends AbstractItem {
 
     @Override
     public String toString() {
-        return "Consumed{" +
+        return "Consumed { " +
                 getName() + " = " +
                 "cal=" + cal + ", " +
                 "carbs=" + getCarbs() + ", " +
                 "protein=" + getProtein() + ", " +
                 "fat=" + getFat() +
-                '}';
+                " }";
     }
 }

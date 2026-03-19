@@ -55,13 +55,21 @@ public abstract class AbstractItem {
         return new Consumption(given + " g " + getName(), c, p, f, cals);
     }
 
+//    public double gramsFromCalories(double calories) {
+//
+//    }
+
     public double computeFromCarbs(AbstractItem other, double given) {
         return computeFrom(other, given, AbstractItem::getCarbs);
     }
 
     public double computeFrom(AbstractItem other, double given, ToDoubleFunction<AbstractItem> f) {
         Consumption otherConsumption = other.consume(given);
-        double otherCarbs = f.applyAsDouble(otherConsumption);
-        return round(toFactor(REF_100g, f.applyAsDouble(this), otherCarbs));
+        double anotherMacro = f.applyAsDouble(otherConsumption);
+        return computeFrom(anotherMacro, f);
+    }
+
+    public double computeFrom(double givenMacros, ToDoubleFunction<AbstractItem> f) {
+        return round(toFactor(REF_100g, f.applyAsDouble(this), givenMacros));
     }
 }

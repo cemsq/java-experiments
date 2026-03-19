@@ -1,6 +1,7 @@
 package org.cem.jkal.model;
 
 import com.beust.jcommander.internal.Lists;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -10,10 +11,16 @@ import java.util.List;
 public class Plan {
 
     private String name;
+    @Getter private boolean enabled = true;
     private final List<Meal> meals = Lists.newArrayList();
 
     public Plan(String name) {
         this.name = name;
+    }
+
+    public Plan enabled(boolean v) {
+        enabled = v;
+        return this;
     }
 
     public Plan add(Meal meal) {
