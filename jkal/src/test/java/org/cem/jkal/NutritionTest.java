@@ -169,7 +169,7 @@ public class NutritionTest {
                 new Plan("mini - 03/16 - 63.19 kg")
                         .add(Meals.avenaNat("m1", 60, 0))
 //                        .add(Meals.panConTopfen("m1", 5))
-                        .add(Meals.standard("m2", Items.arroz, 60))
+                        .add(Meals.standard("m2", Items.arroz, 70))
                         .add(Meals.grasa(30))
                         .add(Meals.panConTopfen("m3", 4))
                         .add(Meals.standard("m4", Items.arroz, 0))
