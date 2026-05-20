@@ -277,14 +277,16 @@ public class NutritionTest {
     @Test
     public void computeFromOtherItem() {
         double quantity = 50;
-//        Item source = Items.arroz;
-        Item source = new Item("carbs", 100, 0, 0);
-        Item target = Items.panDeSandwich;
+        Item source = Items.arroz;
+//        Item source = new Item("carbs", 100, 0, 0);
+        Item[] targets = {Items.pasta, Items.kuskus, Items.papa};
 
-        double equivalent = target.computeFromCarbs(source, quantity);
+        System.out.printf("%s g %s%n", quantity, source.getName());
+        for (Item target : targets) {
+            double equivalent = target.computeFromCarbs(source, quantity);
+            System.out.printf("%s g %s%n", equivalent, target.getName());
+        }
 
-        String msg = String.format("%s g %s = %s g %s", quantity, source.getName(), equivalent, target.getName());
-        System.out.println(msg);
     }
 
     @Test

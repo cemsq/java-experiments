@@ -14,6 +14,7 @@ public class Items {
     public static final Item avena = new Item("Avena", 60, 0, 1.6);
     public static final Item panDeSandwich = new PanDeSandwich(); // 4 panes son 100 g
     public static final Item papa = new Item("Papa ", 15, 0, 0);
+    public static final Item kuskus = new Item("Kuskus ", 77, 8, 0.7);
 
     public static final Item res = new Item("Res", 0, 27, 17);
     public static final Item pavo = new Item("Pavo", 0, 25, 8);
